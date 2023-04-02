@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <!-- prevent autoformat of telephone numbers -->
+    <meta name="format-detection" content="telephone=no">
+
+    {% load static %}
+
+    <title>{{ page_title }}</title>
+
+    <!-- PAGE SPECIFIC STYLES -->
+    <link rel="stylesheet" href="{% static 'game/display_one/styles_page.css' %}?ver=019">
+
+    <!-- Noto Sans JP - 400 -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap" rel="stylesheet">   
+
+    <!-- JQUERY -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+</head>
+
+<body onload="initialization()">
+    <section id="page-meta" class="display-none" data-csrf='{{ csrf_token }}'></section>
+    <input id="uuid-input">
+
+    <section id="background">
+        <div id="background-container"></div>
+    </section>
+
+    <section id="system-status">
+        <div id="system-status-container"></div>
+    </section>
+
+    <section id="primary-container">
+        <section id="student">
+            <div class="container"></div>
+        </section>
+
+        <section id="attendance">
+            <div class="container"></div>
+        </section>
+    </section>
+
+    <!-- PAGE SPECIFIC SCRIPTS -->
+    <script src="{% static 'game/display_one/scripts_page.js' %}?ver=015"></script>
+
+</body>
+</html>

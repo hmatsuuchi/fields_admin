@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <!-- prevent autoformat of telephone numbers -->
+    <meta name="format-detection" content="telephone=no">
+
+    {% load static %}
+
+    <!-- Apple homescreen icons -->
+    <link rel="apple-touch-icon" href="{% static 'customer/touch-icon-iphone.png' %}">
+    <link rel="apple-touch-icon" sizes="152x152" href="{% static 'customer/touch-icon-ipad.png' %}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'customer/touch-icon-iphone-retina.png' %}">
+    <link rel="apple-touch-icon" sizes="167x167" href="{% static 'customer/touch-icon-ipad-retina.png' %}">
+
+    <title>{{ page_title }}</title>
+
+    <!-- GENERAL STYLES -->
+    <link rel="stylesheet" href="{% static 'customer/styles_general.css' %}?ver=029">
+    <!-- NAV/TOOLBAR STYLES -->
+    <link rel="stylesheet" href="{% static 'customer/styles_nav_toolbar.css' %}?ver=043">
+    <!-- PAGE SPECIFIC STYLES -->
+    <link rel="stylesheet" href="{% static 'customer/browse/styles_page.css' %}?ver=044">
+
+    <!-- Noto Sans JP - 400 -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap" rel="stylesheet">
+
+    <!-- JQUERY -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+</head>
+
+<body onload="toggleNav(), initializingFunctions()"  data-csrf='{{ csrf_token }}'>
+    <div id="lazy-load" data-batch_number='0' data-batch_size='25' data-display_archived='{{ display_archived }}' data-display_unarchived='{{ display_unarchived }}' data-sort='none' data-display_only_flagged='{{ display_only_flagged }}'></div>
+    <section id="customer-all">
+        <div id="customer-card-container">
+        </div>
+    </section>
+
+    <section>
+        <div id="toolbar-container">
+            <div id="buttons-container">
+                <div id="toolbar-logo"></div>
+                <div id="button-group">
+                    <a class="toolbar-button" href="/user_profile/logout" id="logout-button"></a>
+                    <a class="toolbar-button" href="/customer/new?return_link={{ return_link }}" id="add-button"></a>
+                    <div class="toolbar-button" id="archive-button" onclick="archiveButtonToggle()"></div>
+                    <div class="toolbar-button" id="flagged-button" onclick="toggleFlaggedButton()"></div>
+                    <!-- <div class="toolbar-button" id="sort-button"></div> -->
+                    <!-- <div class="toolbar-button" id="filter-button"></div> -->
+                </div>
+            </div>
+            <div id="search-container">
+                <input id="search-input" type="text" tabindex="1">
+                <div id="search-submit-button-container">
+                    <div onclick="performNoteSearch()">検索</div>
+                </div>
+            </div>
+            <div id="nav-container">
+                <a id="class-list-navbar-link" class="nav-item" href="/class_list/browse">授業</a>
+                <a id="profiles-navbar-link" class="nav-item current-location">生徒</a>
+                <a id="notes-navbar-link" class="nav-item" href="/customer/notes">日程</a>
+                <a id="attendance-taking-navbar-link" class="nav-item" href="/attendance/">出欠</a>
+                <a id="analytics-dashboard-navbar-link" class="nav-item" href="/analytics/dashboard">分析</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- GENERAL SCRIPTS -->
+    <script src="{% static 'customer/scripts_general.js' %}?ver=016"></script>
+    <!-- NAV/TOOLBAR SCRIPTS -->
+    <script src="{% static 'customer/scripts_nav_toolbar.js' %}?ver=035"></script>
+    <!-- PAGE SPECIFIC SCRIPTS -->
+    <script src="{% static 'customer/browse/scripts_page.js' %}?ver=116"></script>
+
+</body>
+</html>

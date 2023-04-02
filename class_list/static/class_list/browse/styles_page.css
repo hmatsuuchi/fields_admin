@@ -1,0 +1,595 @@
+body {
+    padding-bottom: 10rem;
+}
+
+#top-information-section {
+    margin-top: 8.5rem;
+    color: #5f5f5f;
+    font-size: 1.2rem;
+    text-align: center;
+}
+
+#class-cards-section {
+    padding: 0 1rem;
+}
+
+#class-cards-primary-container {
+    margin: .5rem auto 1rem auto;
+    /* max-width: 400px; */
+
+    display: grid;
+    grid-auto-flow: row;
+    grid-row-gap: 1rem;
+}
+
+.class-card-container {
+    background: #ffffff;
+    width: 100%;
+    border: solid 1px #adadad;
+    border-radius: .2rem;
+    box-shadow: 0.2rem 0.2rem 0.4rem rgb(0 0 0 / 15%);
+
+    display: grid;
+    grid-template-rows: 2.5rem 1fr 2.5rem;
+    align-items: start;
+}
+
+.class-card-header {
+    background-color: #00B8A9;
+    padding: .3rem .5rem;
+
+    display: grid;
+    /* justify-content: space-between; */
+    align-items: center;
+    grid-auto-flow: column;
+    border-radius: .1rem .1rem 0 0;
+}
+
+.archived-icon {
+    height: 100%;
+    width: 1.5rem;
+    max-height: 1.5rem;
+    background-image: url('/static/class_list/img/archive_false.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    display: none;
+}
+
+.archived .archived-icon {
+    display: block;
+}
+
+.class-header-name {
+    color: #ffffff;
+    font-size: 1.2rem;
+    justify-self: right;
+}
+
+.class-card-body {
+    background-color: #ffffff;
+    padding: .5rem;
+
+    display: grid;
+    grid-auto-flow: row;
+    grid-column-gap: 1rem;
+    grid-template-columns: 3rem auto;
+}
+
+.day-of-week-container {
+    width: calc(100% - 2px);
+    text-align: center;
+    border: solid 1px #000000;
+    font-size: 1rem;
+
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-column: 1 / span 2;
+}
+
+.time-container {
+    width: 100%;
+    text-align: center;
+    font-size: .85rem;
+
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-column: 1 / span 2;
+}
+
+.day {
+    border-right: solid 1px #000000;
+}
+
+.day:last-child {
+    border: none;
+}
+
+.day-active {
+    background-color: #FFDE7D;
+}
+
+.time {
+    padding-bottom: .1rem;
+}
+
+.time-active {
+    background-color: #FFDE7D;
+    border-radius: 0 0 .4rem .4rem;
+}
+
+.primary-instructor-icon {
+    height: 2.5rem;
+    width: 2.5rem;
+    border-radius: 50%;
+    background-color: #00B8A9;
+    box-shadow: 2px 2px 3px rgb(0 0 0 / 50%);
+    border: solid 2px #ffffff;
+
+    background-position: 50% calc(100% + .1rem);
+    background-repeat: no-repeat;
+    background-size: auto 90%;
+    justify-self: center;
+    margin-top: .5rem;
+}
+
+.class-description-container {
+    grid-column: 2;
+    margin: .5rem 0;
+    display: grid;
+}
+
+.separator {
+    border-top: solid 1px #000000;
+    width: 100%;
+    grid-column: 1 / span 2;
+    margin-top: .5rem;
+}
+
+.students-container {
+    grid-column: 1 / span 2;
+    margin-top: .3rem;
+}
+
+.student-name-container {
+    color: #000000;
+    text-decoration: none;
+    margin-bottom: .4rem;
+    display: grid;
+    cursor: pointer;
+    justify-content: left;
+    grid-column-gap: .5rem;
+}
+
+.enrollment-status-indicator {
+    background-repeat: no-repeat;
+    background-size: 60%;
+    background-position: 50% 50%;
+    grid-row: 1 / span 2;
+    width: 1.25rem;
+    height: 1.25rem;
+    margin-left: .5rem;
+    align-self: center;
+    border-radius: 50%;
+    border: solid 2px #ffffff;
+    box-shadow: 0.2rem 0.2rem 0.4rem rgb(0 0 0 / 15%);
+    display: grid;
+}
+
+.enrollment-status-indicator.pre-enrolled {
+    background-color: #fdbc00;
+}
+
+.enrollment-status-indicator.enrolled {
+    background-color: #00B8A9;
+}
+
+.enrollment-status-indicator.short-absence {
+    background-color: #F6416C;
+}
+
+.enrollment-status-indicator.long-absence {
+    background-color: #000000;
+}
+
+.student-name-kanji {
+    grid-column: 2;
+    font-size: 1rem;
+}
+
+.student-name-katakana {
+    grid-column: 2;
+    font-size: .7rem;
+}
+
+.student-name-romaji {
+    font-size: .7rem;
+}
+
+/* HEADER MENU */
+#day-filter-button {
+    background-image: url('../img/filter_false.svg');
+    background-repeat: no-repeat;
+    background-size: auto 80%;
+    background-position: 60% 50%;
+}
+
+#day-filter-button.day-filter-button-active {
+    background-image: url('../img/filter_true.svg');
+    background-color: #ffffff;
+}
+
+#buttons-container {
+    z-index: 100;
+}
+
+#buttons-container-sub-menu {
+    z-index: 100;
+    border-radius: .5rem;
+    padding: .1rem .7rem .5rem .7rem;
+    background-color: #F8F3D4;
+    box-shadow: 0 2px 2px rgba(0,0,0,.5);
+
+    opacity: 0;
+    transition: 300ms;
+
+    position: fixed;
+    top: 2.4rem;
+    right: 1rem;
+
+    display: grid;
+    align-items: center;
+}
+
+#buttons-container-sub-menu.show-sub-menu {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.button-sub-menu-title {
+    font-size: .8rem;
+    color: #5f5f5f;
+    border-bottom: solid 1px #5f5f5f;
+    margin-bottom: .5rem;
+}
+
+#day-select-container {
+    font-size: 1.3rem;
+    display: grid;
+    grid-auto-flow: column;
+    grid-column-gap: .5rem;
+    align-items: center;
+}
+
+.day-select-button {
+    width: 1.7rem;
+    height: 1.7rem;
+    border-radius: .2rem;
+    text-align: center;
+    cursor: pointer;
+    border: solid 1px #F8F3D4;
+
+    background-repeat: no-repeat;
+    background-size: auto 70%;
+    background-position: 50% 50%;
+}
+
+#day-0 {
+    background-image: url('../img/day_of_week_icons/0a.svg');
+}
+
+#day-1 {
+    background-image: url('../img/day_of_week_icons/1a.svg');
+    background-position: 45% 50%;
+}
+
+#day-2 {
+    background-image: url('../img/day_of_week_icons/2a.svg');
+}
+
+#day-3 {
+    background-image: url('../img/day_of_week_icons/3a.svg');
+}
+
+#day-4 {
+    background-image: url('../img/day_of_week_icons/4a.svg');
+}
+
+#day-5 {
+    background-image: url('../img/day_of_week_icons/5a.svg');
+}
+
+#day-6 {
+    background-image: url('../img/day_of_week_icons/6a.svg');
+    background-position: 60% 50%;
+}
+
+#day-7 {
+    background-image: url('../img/day_of_week_icons/7a.svg');
+}
+
+.day-select-button.selected {
+    background-color: #ffffff;
+    border: solid 1px #00B8A9;
+}
+
+#day-0.selected {
+    background-image: url('../img/day_of_week_icons/0a.svg');
+}
+
+#day-1.selected {
+    background-image: url('../img/day_of_week_icons/1a.svg');
+}
+
+#day-2.selected {
+    background-image: url('../img/day_of_week_icons/2a.svg');
+}
+
+#day-3.selected {
+    background-image: url('../img/day_of_week_icons/3a.svg');
+}
+
+#day-4.selected {
+    background-image: url('../img/day_of_week_icons/4a.svg');
+}
+
+#day-5.selected {
+    background-image: url('../img/day_of_week_icons/5a.svg');
+}
+
+#day-6.selected {
+    background-image: url('../img/day_of_week_icons/6a.svg');
+}
+
+#day-7.selected {
+    background-image: url('../img/day_of_week_icons/7a.svg');
+}
+
+/* only addresses devices that support hover */
+@media (hover:hover) {
+    .day-select-button:hover {
+        background-color: rgba(255,255,255,0.3);
+    }
+
+    .day-select-button.selected:hover {
+        background-color: #ffffff;
+    }
+
+    .instructor-select-button:hover {
+        background-color: rgba(255,255,255,0.3);
+    }
+
+    .instructor-select-button.selected:hover {
+        background-color: #ffffff;
+    }
+}
+
+#instructor-select-container {
+    display: grid;
+    grid-auto-flow: column;
+    justify-content: left;
+    grid-column-gap: .5rem;
+}
+
+.instructor-select-button {
+    background-position: 50% calc(100% + .1rem);
+    background-repeat: no-repeat;
+    background-size: contain;
+    border-radius: .2rem;
+    width: calc(1.8rem - 2px);
+    height: calc(1.8rem - 2px);
+    border: solid 1px #F8F3D4;
+    cursor: pointer;
+}
+
+.instructor-select-button.selected {
+    background-color: #ffffff;
+    border: solid 1px #00B8A9;
+}
+
+#instructor-0 {
+    background-image: url('../img/day_of_week_icons/7a.svg');
+    background-size: auto 70%;
+    width: 1.8rem;
+    height: 1.8rem;
+    background-position: 50% 50%;
+}
+
+#instructor-2 {
+    background-image: url('/static/customer/notes/img/instructors/2.svg');
+}
+
+#instructor-3 {
+    background-image: url('/static/customer/notes/img/instructors/3.svg');
+    background-position: 55% calc(100% + .1rem);
+}
+
+#instructor-4 {
+    background-image: url('/static/customer/notes/img/instructors/4.svg');
+}
+
+#instructor-5 {
+    background-image: url('/static/customer/notes/img/instructors/5.svg');
+}
+
+.disable-clicks, .disable-clicks * {
+    pointer-events: none;
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) { ... }
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+    #day-filter-button {
+        display: none;
+    }
+
+    #day-select-container {
+        grid-column-gap: .4rem;
+        order: 2;
+        padding-left: .4rem;
+    }
+
+    #buttons-container-sub-menu {
+        position: inherit;
+        border: none;
+        box-shadow: none;
+        padding: 0 .4rem;
+        border-radius: 0;
+        opacity: 1;
+        background-color: transparent;
+        border-right: solid 2px #ffffff;
+        border-left: solid 2px #ffffff;
+        grid-auto-flow: column;
+        pointer-events: auto;
+    }
+
+    .button-sub-menu-title {
+        display: none;
+    }
+
+    .day-select-button {
+        width: 1.8rem;
+        height: 1.8rem;
+        border: none;
+    }
+
+    #day-0 {
+        background-image: url('../img/day_of_week_icons/0.svg');
+    }
+    
+    #day-1 {
+        background-image: url('../img/day_of_week_icons/1.svg');
+        background-position: 45% 50%;
+    }
+    
+    #day-2 {
+        background-image: url('../img/day_of_week_icons/2.svg');
+    }
+    
+    #day-3 {
+        background-image: url('../img/day_of_week_icons/3.svg');
+    }
+    
+    #day-4 {
+        background-image: url('../img/day_of_week_icons/4.svg');
+    }
+    
+    #day-5 {
+        background-image: url('../img/day_of_week_icons/5.svg');
+    }
+    
+    #day-6 {
+        background-image: url('../img/day_of_week_icons/6.svg');
+        background-position: 60% 50%;
+    }
+
+    #day-7 {
+        background-image: url('../img/day_of_week_icons/7.svg');
+    }
+    
+    .day-select-button.selected {
+        background-color: #ffffff;
+        border: none;
+    }
+    
+    #day-0.selected {
+        background-image: url('../img/day_of_week_icons/0a.svg');
+    }
+    
+    #day-1.selected {
+        background-image: url('../img/day_of_week_icons/1a.svg');
+    }
+    
+    #day-2.selected {
+        background-image: url('../img/day_of_week_icons/2a.svg');
+    }
+    
+    #day-3.selected {
+        background-image: url('../img/day_of_week_icons/3a.svg');
+    }
+    
+    #day-4.selected {
+        background-image: url('../img/day_of_week_icons/4a.svg');
+    }
+    
+    #day-5.selected {
+        background-image: url('../img/day_of_week_icons/5a.svg');
+    }
+    
+    #day-6.selected {
+        background-image: url('../img/day_of_week_icons/6a.svg');
+    }
+    #day-7.selected {
+        background-image: url('../img/day_of_week_icons/7a.svg');
+    }
+
+    #instructor-select-container {
+        border-right: solid 2px #ffffff;
+        padding: 0 .5rem 0 .1rem;
+    }
+
+    .instructor-select-button {
+        border: solid 1px #00B8A9;
+    }
+
+    .instructor-select-button.selected {
+        border: solid 1px #ffffff;
+    }
+
+    #instructor-0 {
+        background-image: url('../img/day_of_week_icons/7.svg');
+    }
+
+    #instructor-0.selected {
+        background-image: url('../img/day_of_week_icons/7a.svg');
+    }
+}
+
+/* Custom breakpoint */
+@media (min-width: 800px) {
+    #class-cards-primary-container {
+        /* max-width: 800px; */
+        grid-template-columns: repeat(2, 1fr);
+        grid-column-gap: 1rem;
+    }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) { ... }
+
+/* X-Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+    #class-cards-primary-container {
+        /* max-width: 1200px; */
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* XX-Large devices (larger desktops, 1400px and up) */
+@media (min-width: 1400px) { ... }
+
+/* Custom breakpoint */
+@media (min-width: 1600px) {
+    #class-cards-primary-container {
+        /* max-width: 1600px; */
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+/* Custom breakpoint */
+@media (min-width: 2000px) {
+    #class-cards-primary-container {
+        /* max-width: 2000px; */
+        grid-template-columns: repeat(5, 1fr);
+    }
+}
+
+/* Custom breakpoint */
+@media (min-width: 2400px) {
+    #class-cards-primary-container {
+        max-width: 2400px;
+        grid-template-columns: repeat(6, 1fr);
+    }
+}

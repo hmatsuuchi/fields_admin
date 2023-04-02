@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+
+    <title>{{ page_title }}</title>
+
+    {% load static %}
+    <!-- GENERAL STYLES -->
+    <link rel="stylesheet" href="{% static 'customer/styles_general.css' %}?ver=002">
+    <!-- NAV/TOOLBAR STYLES -->
+    <link rel="stylesheet" href="{% static 'customer/styles_nav_toolbar.css' %}?ver=009">
+    <!-- PAGE SPECIFIC STYLES -->
+    <link rel="stylesheet" href="{% static 'customer/detail/styles_page.css' %}?ver=68">
+
+    <!-- Noto Sans JP - 400 -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap" rel="stylesheet">
+
+    <!-- JQUERY -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+</head>
+
+<body onload="toggleNav(), initializePage()">
+    <div id="page-meta" data-customer_id="{{ customer_id }}" data-return_link="{{ return_link }}" data-csrf="{{ csrf_token }}"></div>
+    <section id="customer-details">
+        <div id="primary-container"></div>
+    </section>
+
+    <section>
+        <div id="toolbar-container">
+            <div id="buttons-container">
+                <div id="toolbar-logo"></div>
+                <div id="button-group">
+                    <a class="toolbar-button" href="/user_profile/logout" id="logout-button"></a>
+                    <!-- <a class="toolbar-button" href="/customer/new?return_link={{ return_link }}" id="add-button"></a> -->
+                </div>
+            </div>
+            <div id="nav-container">
+                <a id="class-list-navbar-link" class="nav-item" href="/class_list/browse">授業</a>
+                <a id="profiles-navbar-link" class="nav-item" href="/customer/browse">生徒</a>
+                <a id="notes-navbar-link" class="nav-item" href="/customer/notes">日程</a>
+                <a id="attendance-taking-navbar-link" class="nav-item" href="/attendance/">出欠</a>
+                <a id="analytics-dashboard-navbar-link" class="nav-item" href="/analytics/dashboard">分析</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- GENERAL SCRIPTS -->
+    <script src="{% static 'customer/scripts_general.js' %}?ver=012"></script>
+    <!-- NAV/TOOLBAR SCRIPTS -->
+    <script src="{% static 'customer/scripts_nav_toolbar.js' %}?ver=004"></script>
+    <!-- PAGE SPECIFIC SCRIPTS -->
+    <script src="{% static 'customer/detail/scripts_page.js' %}?ver=072"></script>
+
+    <!-- CHART.JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+
+</body>
+</html>

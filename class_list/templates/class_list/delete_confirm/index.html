@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+
+    {% load static %}
+
+    <title>{{ page_title }}</title>
+
+    <!-- GENERAL STYLES -->
+    <link rel="stylesheet" href="{% static 'class_list/styles_general.css' %}?ver=002">
+    <!-- NAV/TOOLBAR STYLES -->
+    <link rel="stylesheet" href="{% static 'class_list/styles_nav_toolbar.css' %}?ver=002">
+    <!-- PAGE SPECIFIC STYLES -->
+    <link rel="stylesheet" href="{% static 'class_list/delete_confirm/styles_page.css' %}?ver=020">
+
+    <!-- Noto Sans JP - 400 -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap" rel="stylesheet">
+
+    <!-- JQUERY -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+</head>
+
+<body>
+
+    <section id="top-information-container">
+        <div id="top-information">「{{ class_data.name }}」を削除しますか？</div>
+    </section>
+
+    <section id="class-card-container">
+        <div id="class-card">
+            <div class="class-card-header">
+                <div class="class-header-name">{{ class_data.name }}</div>
+            </div>
+            <div class="class-card-body">
+                <div class="day-of-week-container">
+                    <div class="day{% if class_data.day_of_week == 0 %} day-active{% endif %}">日</div>
+                    <div class="day{% if class_data.day_of_week == 1 %} day-active{% endif %}">月</div>
+                    <div class="day{% if class_data.day_of_week == 2 %} day-active{% endif %}">火</div>
+                    <div class="day{% if class_data.day_of_week == 3 %} day-active{% endif %}">水</div>
+                    <div class="day{% if class_data.day_of_week == 4 %} day-active{% endif %}">木</div>
+                    <div class="day{% if class_data.day_of_week == 5 %} day-active{% endif %}">金</div>
+                    <div class="day{% if class_data.day_of_week == 6 %} day-active{% endif %}">土</div>
+                </div>
+                <div class="time-container">
+                    <div class="time{% if class_data.day_of_week == 0 %} time-active{% endif %}">{% if class_data.day_of_week == 0 %}{{ class_data.start_time }}{% endif %}</div>
+                    <div class="time{% if class_data.day_of_week == 1 %} time-active{% endif %}">{% if class_data.day_of_week == 1 %}{{ class_data.start_time }}{% endif %}</div>
+                    <div class="time{% if class_data.day_of_week == 2 %} time-active{% endif %}">{% if class_data.day_of_week == 2 %}{{ class_data.start_time }}{% endif %}</div>
+                    <div class="time{% if class_data.day_of_week == 3 %} time-active{% endif %}">{% if class_data.day_of_week == 3 %}{{ class_data.start_time }}{% endif %}</div>
+                    <div class="time{% if class_data.day_of_week == 4 %} time-active{% endif %}">{% if class_data.day_of_week == 4 %}{{ class_data.start_time }}{% endif %}</div>
+                    <div class="time{% if class_data.day_of_week == 5 %} time-active{% endif %}">{% if class_data.day_of_week == 5 %}{{ class_data.start_time }}{% endif %}</div>
+                    <div class="time{% if class_data.day_of_week == 6 %} time-active{% endif %}">{% if class_data.day_of_week == 6 %}{{ class_data.start_time }}{% endif %}</div>
+                </div>
+                {% if class_data.primary_instructor %}
+                <div class="primary-instructor-icon" style="background-image: url(&quot;/static/customer/notes/img/instructors/{{ class_data.primary_instructor.id }}.svg&quot;"></div>
+                {% endif %}
+                <div class="class-description-container">
+                    <div class="class-type">{{ class_data.class_type }}</div>
+                    <div class="instructor">{{ class_data.primary_instructor_name }}</div>
+                    <div class="regularity">{% if class_data.irregular %}不定期{% else %}定期{% endif %}</div>
+                </div>
+                <div class="separator"></div>
+                <div class="students-container">
+                    {% for x in class_data.student_list %}
+                    <div class="student-name-container">
+                        <div class="student-name-kanji">{{ x.1 }} {{ x.2 }}（{{ x.5 }}）</div>
+                        <div class="student-name-katakana">{{ x.3 }} {{ x.4 }}</div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="delete-confirmation">
+        <div id="delete-confirmation-container">
+            <div id="delete-button" class="button" onclick="deleteClassRecord({{ class_data.id }}, '{{ csrf_token }}')">はい、大丈夫です</div>
+            <a id="back-button" class="button" href="/class_list/edit/{{ class_data.id }}?return_link={{ return_link }}">戻る</a>
+        </div>
+    </section>
+
+    <section>
+        <div id="toolbar-container">
+            <div id="buttons-container">
+                <div id="toolbar-logo"></div>
+                <div id="button-group">
+                    <a class="toolbar-button" href="/user_profile/logout" id="logout-button"></a>
+                </div>
+            </div>
+            <div id="nav-container">
+                <a id="class-list-navbar-link" class="nav-item" href="/class_list/browse">授業</a>
+                <a id="profiles-navbar-link" class="nav-item" href="/customer/browse">生徒</a>
+                <a id="notes-navbar-link" class="nav-item" href="/customer/notes">日程</a>
+                <a id="attendance-taking-navbar-link" class="nav-item" href="/attendance/">出欠</a>
+                <a id="analytics-dashboard-navbar-link" class="nav-item" href="/analytics/dashboard">分析</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- GENERAL SCRIPTS -->
+    <script src="{% static 'class_list/scripts_general.js' %}?ver=004"></script>
+    <!-- NAV/TOOLBAR SCRIPTS -->
+    <script src="{% static 'class_list/scripts_nav_toolbar.js' %}?ver=002"></script>
+    <!-- PAGE SPECIFIC SCRIPTS -->
+    <script src="{% static 'class_list/delete_confirm/scripts_page.js' %}?ver=022"></script>
+
+</body>
+</html>

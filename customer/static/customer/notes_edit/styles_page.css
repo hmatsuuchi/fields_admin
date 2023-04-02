@@ -1,0 +1,115 @@
+body {
+    background-color: #dad6d6;
+}
+
+/* NEW EDIT NOTE */
+#new-edit-note {
+    margin: 6.5rem 1rem 1rem 1rem;
+    display: grid;
+    justify-items: center;
+}
+
+#new-edit-note-container {
+    background-color: #ffffff;
+
+    width: calc(100% - 2rem);
+
+    box-shadow: 0.2rem 0.2rem 0.4rem rgb(0 0 0 / 15%);
+    border-radius: .2rem;
+    border: solid 1px #adadad;
+
+    padding: 1rem;
+
+    transition-duration: 500ms;
+
+    display: grid;
+    align-content: start;
+}
+
+/* NEW EDIT NOTE - FORM STYLING */
+.label-focus {
+    padding-top: 0;
+    top: -1.3rem;
+    left: 0;
+    font-size: .8rem;
+    color: #000000;
+}
+
+.new-note-input-focus {
+    box-shadow: 0 0 0 1px #000000;
+}
+
+/* NEW EDIT NOTE - FORM STYLING - CUSTOMER */
+#customer-container {
+    position: relative;
+}
+
+#customer-choice-list-container { /* inactive choice container */
+    position: absolute;
+
+    width: calc(15rem + .6rem);
+    top: calc(100% - .2rem);
+
+    background-color: #ffffff;
+
+    max-height: 50vh;
+    overflow-y: scroll;
+
+    border: solid 1px #000000;
+    border-top: none;
+    border-radius: 0 0 .2rem .2rem;
+
+    z-index: 3;
+
+    transform-origin: 50% 0%;
+    transform: scaleY(0);
+
+    cursor: pointer;
+}
+
+#customer-choice-list-container.active-type-choice-list { /* active choice container */
+    transform: scaleY(1);
+    transition-duration: 200ms;
+}
+
+.customer-choice-item {
+    padding: .5rem 1rem;
+    display: none;
+}
+
+.active-customer-choice-list {
+    border-radius: .2rem .2rem 0 0;
+}
+
+
+#new-customer-input {
+    position: relative;
+    width: 15rem;
+    z-index: 4;
+}
+
+#customer-choice-list-container .highlighted-student {
+    background-color: #FFDE7D;
+}
+
+#customer-choice-list-container .display-student-choice {
+    display: block;
+}
+
+/* NEW EDIT NOTE - FORM STYLING - TYPE */
+#new-type-input {
+    max-width: 22rem;
+}
+
+/* NEW EDIT NOTE - FORM STYLING - INSTRUCTOR */
+#new-instructor-input, #new-instructor-2-input {
+    width: 15rem;
+}
+
+@media (min-width: 651px) { ... }
+
+@media (min-width: 769px) { ... }
+
+@media (min-width: 1025px) { ... }
+
+@media (min-width: 1201px) { ... }

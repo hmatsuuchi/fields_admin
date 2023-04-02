@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+
+    <title>{{ page_title }}</title>
+
+    {% load static %}
+    <!-- GENERAL STYLES -->
+    <link rel="stylesheet" href="{% static 'customer/styles_general.css' %}?ver=016">
+    <!-- NAV/TOOLBAR STYLES -->
+    <link rel="stylesheet" href="{% static 'customer/styles_nav_toolbar.css' %}?ver=005">
+    <!-- PAGE SPECIFIC STYLES -->
+    <link rel="stylesheet" href="{% static 'customer/delete/styles_page.css' %}?ver=012">
+
+    <!-- Noto Sans JP - 400 -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap" rel="stylesheet">
+
+    <!-- JQUERY -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+</head>
+
+<body onload="toggleNav()">
+
+    <section id="customer-single">
+        <div id="profile-displayed" class="top-information">「{{ customer.last_name_kanji }} {{ customer.first_name_kanji }}」を削除しますか？</div>
+        <div id="customer-card-container">
+            <div class="customer-card">
+                <div class="card-header {% if customer.status == 1 %}pre-enrolled{% elif customer.status == 2 %}enrolled{% elif customer.status == 3 %}short-absence{% else %}long-absence{% endif %}">
+                    <div class="status">{{ customer.get_status_display }}</div>
+                </div>
+                <div class="card-body">
+                    <div class="name-container">
+                        <div class="full-name-ja">{{ customer.last_name_kanji }} {{ customer.first_name_kanji }}{% if customer.grade != 0 %} ({{ customer.get_grade_display }}){% endif %}</div>
+                        <div class="sub-name">{{ customer.last_name_katakana }} {{ customer.first_name_katakana }}</div>
+                        <div class="sub-name">{{ customer.last_name_romaji }}, {{ customer.first_name_romaji }}</div>
+                    </div>
+                    {% if customer.phone_1 or customer.phone_2 %}
+                    <div class="phone-container bottom-separator">
+                        {% if customer.phone_1 %}
+                        <div class="phone-1">{{ customer.phone_1 }} ({{ customer.get_phone_1_type_display }})</div>
+                        {% endif %}
+                        {% if customer.phone_2 %}
+                        <div class="phone-2">{{ customer.phone_2 }} ({{ customer.get_phone_2_type_display }})</div>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+                    {% if customer.post_code or customer.city or customer.address_1 or customer.address_2 %}
+                    <div class="address-container bottom-separator">
+                        <div class="address-1">〒{{ customer.post_code }}</div>
+                        <div class="address-2"> {{ customer.get_prefecture_display }}{{ customer.city }}{{ customer.address_1 }}</div>
+                        <div class="address-3">{{ customer.address_2 }}</div>
+                    </div>
+                    {% endif %}
+                    {% if customer.birthday %}
+                    <div class="birthday bottom-separator">{{ customer.birthday|date:"Y-m-d" }} ({{ customer.age }}才)</div>
+                    {% endif %}
+                    {% if customer.payment_method %}
+                    <div class="payment-method bottom-separator">{{ customer.get_payment_method_display }}</div>
+                    {% endif %}
+                </div>
+                <!-- <div class="card-footer">
+                    <div class="edit inactive"></div>
+                    <div class="details inactive"></div>
+                    <div class="notes inactive"></div>
+                    <div class="flag inactive"></div>
+                </div> -->
+            </div>
+        </div>
+    </section>
+    
+    <section id="delete-confirmation">
+        <div id="delete-confirmation-container">
+            <a id="delete-button" class="button" onclick="deleteCustomer('{{ csrf_token }}', '{{ customer.id }}')">はい、大丈夫です</a>
+            <a href="/customer/edit/{{ customer.id }}?return_link={{ return_link }}" id="back-button" class="button">戻る</a>
+        </div>
+    </section>
+
+    <section>
+        <div id="toolbar-container">
+            <div id="buttons-container">
+                <div id="toolbar-logo"></div>
+                <div id="button-group">
+                    <a class="toolbar-button" href="/user_profile/logout" id="logout-button"></a>
+                </div>
+            </div>
+            <div id="nav-container">
+                <a id="class-list-navbar-link" class="nav-item" href="/class_list/browse">授業</a>
+                <a id="profiles-navbar-link" class="nav-item" href="/customer/browse">生徒</a>
+                <a id="notes-navbar-link" class="nav-item" href="/customer/notes">日程</a>
+                <a id="attendance-taking-navbar-link" class="nav-item" href="/attendance/">出欠</a>
+                <a id="analytics-dashboard-navbar-link" class="nav-item" href="/analytics/dashboard">分析</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- GENERAL SCRIPTS -->
+    <script src="{% static 'customer/scripts_general.js' %}?ver=009"></script>
+    <!-- NAV/TOOLBAR SCRIPTS -->
+    <script src="{% static 'customer/scripts_nav_toolbar.js' %}?ver=006"></script>
+    <!-- PAGE SPECIFIC SCRIPTS -->
+    <script src="{% static 'customer/delete/scripts_page.js' %}?ver=008"></script>
+
+</body>
+</html>

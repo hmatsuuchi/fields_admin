@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+
+    {% load static %}
+
+    <title>{{ page_title }}</title>
+
+    <!-- PAGE SPECIFIC STYLES -->
+    <link rel="stylesheet" href="{% static 'analytics/changelog/class_list/browse/styles_page.css' %}?ver=002">
+
+    <!-- JQUERY -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+</head>
+
+<body onload="initialization()">
+
+    <section id="page-meta" data-csrf_token="{{ csrf_token }}" data-batch_number="0"></section>
+
+    <section id="table-section">
+        <table id="table">
+            <tr>
+                <th>ID</th>
+                <th>CHANGELOG - CLASS</th>
+                <th>CHANGELOG - DATE TIME</th>
+                <th>CHANGELOG - USER</th>
+                <th>CHANGELOG - TYPE</th>
+                <th>CLASS NAME</th>
+                <th>PRIMARY INSTRUCTOR</th>
+                <th>IRREGULAR</th>
+                <th>DAY OF WEEK</th>
+                <th>START TIME</th>
+                <th>STUDENTS</th>
+                <th>ARCHIVED</th>
+                <th>CLASS TYPE</th>
+            </tr>
+        </table>
+    </section>
+
+    <section>
+        <button id="load-more-button" onclick="getChangelogClasslistAll()">LOAD ADDITIONAL RECORDS</button>
+    </section>
+
+    <!-- PAGE SPECIFIC SCRIPTS -->
+    <script src="{% static 'analytics/changelog/class_list/browse/scripts_page.js' %}?ver=002"></script>
+
+</body>
+</html>

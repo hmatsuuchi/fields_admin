@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+
+    {% load static %}
+
+    <title>{{ page_title }}</title>
+
+    <!-- PAGE SPECIFIC STYLES -->
+    <link rel="stylesheet" href="{% static 'analytics/accesslog/browse/styles_page.css' %}?ver=003">
+
+    <!-- JQUERY -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+</head>
+
+<body onload="initialization()">
+
+    <section id="page-meta" data-csrf_token="{{ csrf_token }}" data-batch_number="0"></section>
+
+    <section id="table-section">
+        <table id="table">
+            <tr>
+                <th>ID</th>
+                <th>ACCESSLOG URL</th>
+                <th>ACCESSLOG DATE TIME</th>
+                <th>ACCESSLOG USER</th>
+                <th>ACCESSLOG POST PARAMETERS</th>
+                <th>ACCESSLOG GET PARAMETERS</th>
+            </tr>
+        </table>
+    </section>
+
+    <section>
+        <button id="load-more-button" onclick="getAccesslogAll()">LOAD ADDITIONAL RECORDS</button>
+    </section>
+
+    <!-- PAGE SPECIFIC SCRIPTS -->
+    <script src="{% static 'analytics/accesslog/browse/scripts_page.js' %}?ver=004"></script>
+
+</body>
+</html>

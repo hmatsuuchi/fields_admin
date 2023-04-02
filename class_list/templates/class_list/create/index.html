@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+
+    {% load static %}
+
+    <title>{{ page_title }}</title>
+
+    <!-- GENERAL STYLES -->
+    <link rel="stylesheet" href="{% static 'class_list/styles_general.css' %}?ver=002">
+    <!-- NAV/TOOLBAR STYLES -->
+    <link rel="stylesheet" href="{% static 'class_list/styles_nav_toolbar.css' %}?ver=002">
+    <!-- PAGE SPECIFIC STYLES -->
+    <link rel="stylesheet" href="{% static 'class_list/create/styles_page.css' %}?ver=015">
+
+    <!-- Noto Sans JP - 400 -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap" rel="stylesheet">
+
+    <!-- JQUERY -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+</head>
+
+<body onload="initializingScripts()" data-csrf="{{ csrf_token }}">
+
+    <section id="new-class">
+        <div id="top-information" class="top-information">新しいクラスを作成しています</div>
+        <div id="new-class-card-container">
+            <div id="new-class-card">
+                <div class="label">クラス名</div>
+                <input id="input-class-name">
+                <div class="label">生徒リスト</div>
+                <div id="select-student-container">
+                    <input id="input-students">
+                    <div id="student-select-list">
+                        {% for x in all_students_list %}
+                        <div id="student-{{ x.id }}" class="student-choice display-student-choice" onmousedown="selectStudentFromChoiceList({{ x.id }}, '{{ x.last_name_kanji }}', '{{ x.first_name_kanji }}')" data-id="{{ x.id }}" data-last_name_kanji="{{ x.last_name_kanji }}" data-first_name_kanji="{{ x.first_name_kanji }}" data-meta="{{ x.last_name_kanji }}{{ x.first_name_kanji }}{{ x.last_name_katakana }}{{ x.first_name_katakana }}{{ x.last_name_romaji }}{{ x.first_name_romaji }}">{{ x.last_name_kanji }} {{ x.first_name_kanji }}</div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div id="student-box"></div>
+                <div class="label">講師</div>
+                <select id="input-primary-instructor">
+                    {% for x in all_instructor_list %}
+                    <option value="{{ x.0 }}">{{ x.1 }}</option>
+                    {% endfor %}
+                </select>
+                <div class="label">不定期</div>
+                <div class="toggle-button" id="irregular-lesson" onclick="toggleSlider('irregular-lesson')">
+                    <div class="toggle-button-icon"></div>
+                    <div class="toggle-button-dot"></div>
+                </div>
+                <div class="label">曜日</div>
+                <select id="input-day-of-week">
+                    {% for x in day_of_week_list %}
+                    <option value="{{ x.0 }}">{{ x.1 }}</option>
+                    {% endfor %}
+                </select>
+                <div class="label">時間</div>
+                <input id="input-start-time" type="time">
+                <div class="label">タイプ</div>
+                <select id="input-class-type">
+                    {% for x in class_type_list %}
+                    <option value="{{ x.0 }}">{{ x.1 }}</option>
+                    {% endfor %}
+                </select>
+                <div class="label">アーカイブ</div>
+                <div class="toggle-button" id="archived" onclick="toggleSlider('archived')">
+                    <div class="toggle-button-icon"></div>
+                    <div class="toggle-button-dot"></div>
+                </div>
+                <div id="bottom-button-container">
+                    <a id="back-button" href="{{ return_link }}" class="button">戻る</a>
+                    <div id="submit-button" class="button" onclick="createNewClass()">作成</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div id="toolbar-container">
+            <div id="buttons-container">
+                <div id="toolbar-logo"></div>
+                <div id="button-group">
+                    <a class="toolbar-button" href="/user_profile/logout" id="logout-button"></a>
+                </div>
+            </div>
+            <div id="nav-container">
+                <a id="class-list-navbar-link" class="nav-item" href="/class_list/browse">授業</a>
+                <a id="profiles-navbar-link" class="nav-item" href="/customer/browse">生徒</a>
+                <a id="notes-navbar-link" class="nav-item" href="/customer/notes">日程</a>
+                <a id="attendance-taking-navbar-link" class="nav-item" href="/attendance/">出欠</a>
+                <a id="analytics-dashboard-navbar-link" class="nav-item" href="/analytics/dashboard">分析</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- GENERAL SCRIPTS -->
+    <script src="{% static 'class_list/scripts_general.js' %}?ver=004"></script>
+    <!-- NAV/TOOLBAR SCRIPTS -->
+    <script src="{% static 'class_list/scripts_nav_toolbar.js' %}?ver=002"></script>
+    <!-- PAGE SPECIFIC SCRIPTS -->
+    <script src="{% static 'class_list/create/scripts_page.js' %}?ver=030"></script>
+
+</body>
+</html>

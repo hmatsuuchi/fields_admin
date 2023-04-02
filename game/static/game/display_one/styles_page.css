@@ -1,0 +1,267 @@
+body {
+    width: 100vw;
+    height: 100vh;
+
+    margin: 0;
+
+    font-family: 'Noto Sans JP', sans-serif;
+}
+
+.display-none {
+    display: none;
+}
+
+#uuid-input {
+    position: fixed;
+    right: 0;
+    bottom: -10vh;
+}
+
+#background {
+    z-index: -1;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+#background-container {
+    height: 1080px;
+    width: 3510px;
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    background-image: url("/static/game/display_one/img/background_solar_system.png");
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: 50% 50%;
+
+    animation: background-scroll 360000ms linear infinite;
+}
+
+@keyframes background-scroll {
+    0% {left: 0;}
+    50% {left: -1590px;}
+    100% {left: 0;}
+}
+
+#primary-container {
+    width: calc(100vw - 2vw);
+    height: calc(100vh - 2vw);
+    padding: 1vw;
+
+    /* background-image: url('img/background_game.svg');
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    background-size: cover; */
+
+    display: grid;
+    grid-column-gap: 1vw;
+    justify-content: left;
+    grid-auto-flow: column;
+}
+
+.container {
+    background-color: #ffffff;
+    max-height: 100%;
+    padding: 1vw;
+    border: solid 1px #5f5f5f;
+    border-radius: 2px;
+    font-size: 1.5vw;
+    box-shadow: 2px 2px 4px rgb(0 0 0 / 30%);
+    max-height: calc(100vh - 4vw);
+    overflow: hidden;
+    min-width: 15vw;
+
+    opacity: 0;
+
+    display: grid;
+    grid-row-gap: .5vh;
+}
+
+.container.visible {
+    opacity: 1;
+    transition: 500ms;
+}
+
+.smooth-fade-out {
+    transition: 500ms;
+}
+
+/* STATUS LIGHT */
+#system-status-container {
+    position: fixed;
+    right: 1vw;
+    top: 1vw;
+    background-color: #ffffff;
+    padding: .6vw;
+    border: solid 1px #5f5f5f;
+    border-radius: 2px;
+    font-size: 1.5vw;
+    box-shadow: 2px 2px 4px rgb(0 0 0 /30%);
+
+    display: grid;
+    grid-auto-flow: column;
+    grid-column-gap: .5vw;
+}
+
+#status-light {
+    height: 2vw;
+    width: 2vw;
+    background-color: #FFDE7D;
+    border-radius: 50%;
+    border: solid 2px #ffffff;
+    box-shadow: 2px 2px 4px rgb(0 0 0 / 30%);
+}
+
+#status-light.active {
+    background-color: #00B8A9;
+}
+
+/* STUDENT CARD */
+#student-name {
+    grid-column: 1 / span 2;
+    padding-bottom: .5vw;
+    border-bottom: solid 1px #000000;
+}
+
+#experience-points {
+    grid-row: 2;
+    grid-column: 1;
+}
+
+#level {
+    grid-row: 2;
+    grid-column: 2;
+    justify-self: right;
+}
+
+#experience-points-meter {
+    grid-column: 1 / span 2;
+    height: 1vw;
+    width: 100%;
+    background-color: #bebebe;
+    border-radius: 1vw;
+    box-shadow: 2px 2px 4px rgb(0 0 0 / 30%);
+    border: solid 2px #ffffff;
+}
+
+#experience-points-meter-progress {
+    height: 1vw;
+    background-color: #00B8A9;
+    border-radius: 1vw;
+
+    display: grid;
+    justify-content: center;
+    align-content: center;
+}
+
+#experience-points-meter-progress-label {
+    color: #ffffff;
+    font-size: .7vw;
+    padding-bottom: .1vw;
+}
+
+#rank-container {
+    width: 10vw;
+    height: 10vw;
+    background-position: 50% 50%;
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-top: 1vw;
+    grid-column: 1 / span 2;
+    justify-self: center;
+}
+
+#rank-text {
+    grid-column: 1 / span 2;
+    justify-self: center;
+}
+
+#rank-meter {
+    grid-column: 1 / span 2;
+    height: 1vw;
+    width: 100%;
+    background-color: #bebebe;
+    border-radius: 1vw;
+    box-shadow: 2px 2px 4px rgb(0 0 0 / 30%);
+    border: solid 2px #ffffff;
+}
+
+#rank-meter-progress {
+    height: 1vw;
+    background-color: #f6416c;
+    border-radius: 1vw;
+
+    display: grid;
+    justify-content: center;
+    align-content: center;
+}
+
+/* ATTENDANCE CARD */
+#attendance .container.visible {
+    transition-delay: 500ms;
+}
+
+.attendance-row {
+    border: solid 1px #5f5f5f;
+    border-radius: 2px;
+    padding: .4vw .7vw;
+    box-shadow: 2px 2px 4px rgb(0 0 0 / 30%);
+    font-size: .8vw;
+
+    display: grid;
+    grid-template-columns: 3vw 20vw 3vw;
+    grid-auto-flow: column;
+    align-items: center;
+}
+
+.instructor {
+    background-color: #00B8A9;
+    width: 2vw;
+    height: 2vw;
+    border-radius: 100%;
+    background-repeat: no-repeat;
+    background-position: 50% 200%;
+    background-size: auto 95%;
+
+    box-shadow: 2px 2px 4px rgb(0 0 0 / 30%);
+    border: solid 2px #ffffff;
+
+    grid-row: 1 / span 2;
+    justify-self: left;
+}
+
+.date-time {
+    justify-self: left;
+}
+
+.class-name {
+    justify-self: left;
+}
+
+#additional-records {
+    font-size: 1vw;
+    font-style: italic;
+    color: #323232;
+    justify-self: center;
+}
+
+.attendance-status {
+    width: 1.2vw;
+    height: 1.2vw;
+    border-radius: 100%;
+    box-shadow: 2px 2px 4px rgb(0 0 0 / 30%);
+    border: solid 2px #ffffff;
+    grid-row: 1 / span 2;
+    justify-self: right;
+}
+
+.attendance-status.present {
+    background-color: #00B8A9;
+}
+
+.attendance-status.absent {
+    background-color: #f6416c;
+}

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+
+    <title>{{ page_title }}</title>
+
+    {% load static %}
+    <!-- GENERAL STYLES -->
+    <link rel="stylesheet" href="{% static 'user_profile/styles_1_a.css' %}?ver=015">
+    <!-- PAGE SPECIFIC STYLES -->
+    <link rel="stylesheet" href="{% static 'user_profile/login/styles_2_a.css' %}?ver=019">
+
+    <!-- Noto Sans JP - 100, 400 -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100;400&display=swap" rel="stylesheet">
+
+    <!-- JQUERY -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+</head>
+
+<body onload="enterPress('{{ csrf_token }}', '{{ next }}')">
+
+    <section id="login">
+        <div id="login-container">
+            <div id="title">FIELDS</div>
+            <div class="input-label">ユーザー名</div>
+            <input id="username" autocapitalize="off">
+            <div class="input-label">パスワード</div>
+            <input type="password" id="password">
+            <div id="login-button" onclick="login('{{ csrf_token }}', '{{ next }}')">ログイン</div>
+        </div>
+    </section>
+
+    <!-- GENERAL SCRIPTS -->
+    <script src="{% static 'user_profile/scripts_1_a.js' %}?ver=003"></script>
+    <!-- PAGE SPECIFIC SCRIPTS -->
+    <script src="{% static 'user_profile/login/scripts_2_a.js' %}?ver=011"></script>
+
+</body>
+</html>

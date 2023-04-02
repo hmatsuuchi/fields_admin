@@ -1,0 +1,283 @@
+/* DOCUMENT */
+body {
+    background-color: #dad6d6;
+}
+
+/* TOP INFORMATION */
+#top-information {
+    color: #5f5f5f;
+    font-size: 1.2rem;
+    text-align: center;
+    margin-bottom: .5rem;
+}
+
+/* FORM */
+#new-class {
+    margin: 6.5rem 1rem 1rem 1rem;
+    font-family: 'Noto Sans JP', sans-serif;
+
+    display: grid;
+}
+
+#new-class-card {
+    background-color: #ffffff;
+    width: calc(100% - 2rem);
+    max-width: 600px;
+    padding: 1rem;
+    box-shadow: 0.2rem 0.2rem 0.4rem rgb(0 0 0 / 15%);
+    border-radius: .2rem;
+    border: solid 1px #adadad;
+    margin: 0 auto;
+}
+
+#new-class-card .label {
+    margin-top: .7rem;
+}
+
+#new-class-card input, #new-class-card select {
+    border: solid 1px #000000;
+    border-radius: .2rem;
+    background-color: #ffffff;
+    font-size: 1.2rem;
+    padding: .3rem;
+}
+
+#new-class-card input:focus, #new-class-card select:focus {
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, .4);
+    outline: none!important;
+}
+
+/* INPUT STYLING */
+#input-class-name {
+    width: calc(100% - .7rem);
+    max-width: 25rem;
+}
+
+#input-primary-instructor {
+    width: 12rem;
+}
+
+#input-start-time, #input-duration {
+    width: 6rem;
+}
+
+#input-day-of-week {
+    width: 6.725rem;
+}
+
+#input-students {
+    width: calc(100% - .7rem);
+    max-width: 15rem;
+    position: relative;
+    z-index: 2;
+}
+
+#select-students-container {
+    position: relative;
+}
+
+#student-box {
+    width: calc(100% - 1rem);
+    padding: .5rem;
+    min-height: 2.25rem;
+    /* border: solid 2px #5f5f5f; */
+    background-color: #dad6d6;
+    border-radius: .2rem;
+    margin-top: .7rem;
+
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    gap: .5rem;
+}
+
+#student-box .selected-students {
+    padding: .2rem .8rem;
+    background-color: #ffffff;
+    border: solid 2px #F6416C;
+    box-shadow: 0.2rem 0.2rem 0.4rem rgb(0 0 0 / 15%);
+    border-radius: 99rem;
+    white-space: nowrap;
+
+    display: grid;
+    grid-auto-flow: column;
+    grid-column-gap: .5rem;
+}
+
+#student-box .remove-button {
+    position: relative;
+    height: 1.25rem;
+    width: 1.25rem;
+    align-self: center;
+    cursor: pointer;
+}
+
+#student-box .cross-one, #student-box .cross-two {
+    position: absolute;
+    height: 100%;
+    width: 10%;
+    background-color: #989898;
+    border-radius: 99rem;
+    left: 40%;
+}
+
+#student-box .cross-one {
+    transform: rotate(-45deg);
+}
+
+#student-box .cross-two {
+    transform: rotate(45deg);
+}
+
+#student-select-list {
+    background-color: #ffffff;
+    border: solid 1px #000000;
+    border-top: none;
+    border-radius: 0 0 .2rem .2rem;
+    position: absolute;
+    width: calc(15rem + .6rem);
+    max-height: 50vh;
+    overflow-y: scroll;
+    z-index: 1;
+    transform-origin: 50% 0;
+    transform: scaleY(0);
+    cursor: pointer;
+}
+
+#student-select-list.active {
+    transform: scaleY(1);
+    transition-duration: 200ms;
+}
+
+#new-class .student-choice {
+    padding: .5rem 1rem;
+    display: none;
+}
+
+#new-class .student-choice.selected {
+    background-color: #f87292;
+}
+
+#new-class .display-student-choice {
+    display: block;
+}
+
+#new-class .highlighted-student {
+    background-color: #FFDE7D;
+}
+
+
+/* TOGGLE BUTTONS */
+#new-class .toggle-button {
+    width: 5.8rem;
+    height: 3rem;
+    border-radius: 5.8rem;
+    background-color: #dad6d6;
+    cursor: pointer;
+    transition: 350ms;
+    display: grid;
+}
+
+#new-class .toggle-button-icon {
+    position: absolute;
+    height: 1.5rem;
+    width: 1.5rem;
+    margin-top: .75rem;
+    margin-left: .95rem;
+
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+
+}
+
+#new-class .toggle-button-dot {
+    position: relative;
+    top: .25rem;
+    height: 2.5rem;
+    width: 2.5rem;
+    margin: 0 .25rem;
+    border-radius: 2.5rem;
+    transition: 350ms;
+    background-color: #ffffff;
+}
+
+#new-class .archived .toggle-button-dot {
+    transform: translateX(2.8rem);
+}
+
+#irregular-lesson .toggle-button-icon {
+    background-image: url('/static/class_list/img/clock_icon.svg');
+}
+
+#irregular-lesson.archived {
+    background-color: #00dfcd;
+}
+
+#archived .toggle-button-icon {
+    background-image: url('/static/class_list/img/irregular_archive_toggle_button.svg');
+}
+
+#archived.archived {
+    background: #FFDE7D;
+}
+
+/* BOTTOM BUTTONS */
+#new-class-card #bottom-button-container {
+    margin-top: 3rem;
+    display: grid;
+    grid-auto-flow: row;
+    grid-row-gap: .75rem;
+    text-align: center;
+}
+
+#button-sub-container {
+    display: grid;
+    grid-row-gap: .75rem;
+    grid-auto-flow: row;
+}
+
+#new-class-card .button {
+    color: #ffffff;
+    padding: .5rem 1.2rem;
+    border-radius: .5rem;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#new-class-card #back-button {
+    background-color: #505050;
+}
+
+#new-class-card #submit-button {
+    background-color: #00b8a9;
+}
+
+#new-class-card #delete-button {
+    background-color: #F6416C;
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {
+    /* BOTTOM BUTTONS */
+    #new-class-card #bottom-button-container {
+        grid-auto-flow: column;
+        justify-content: space-between;
+    }
+
+    #button-sub-container {
+        grid-column-gap: .5rem;
+        grid-auto-flow: column;
+    }
+}
+
+@media (min-width: 651px) {
+    /* INPUT STYLING */
+    #input-class-name {
+        width: 25rem;
+    }
+
+    #input-students {
+        width: 15rem;
+    }
+}

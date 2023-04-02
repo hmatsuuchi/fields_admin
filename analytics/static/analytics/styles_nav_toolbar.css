@@ -1,0 +1,153 @@
+body {
+    margin: 0;
+}
+
+/* TOOLBAR */
+#toolbar-container {
+    position: fixed;
+    top: 0;
+
+    width: 100vw;
+
+    display: grid;
+    grid-auto-rows: 2.5rem;
+
+    z-index: 99;
+
+    /* make text unselectable */
+    -webkit-user-select: none; /* Safari */        
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+/Edge */
+    user-select: none; /* Standard */
+}
+
+/* LOGO */
+#toolbar-logo {
+    width: 6rem;
+    height: 1.5rem;
+
+    background-image: url(img/toolbar_logo.svg);
+    background-repeat: no-repeat;
+    background-size: auto 100%;
+    background-position: 0% 50%;
+}
+
+/* BUTTONS */
+#buttons-container {
+    z-index: 99;
+
+    background-color: #00B8A9;
+
+    padding: 0 .6rem;
+
+    display: grid;
+    grid-auto-flow: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#button-group {
+    display: grid;
+    grid-auto-flow: column;
+    align-items: center;
+    grid-column-gap: .3rem;
+}
+
+.toolbar-button {
+    border-radius: .2rem;
+
+    width: calc(2.5rem - .6rem);
+    height: calc(2.5rem - .6rem);
+
+    cursor: pointer;
+}
+ 
+/* BUTTONS - LOGOUT BUTTON */
+#logout-button {
+    background-image: url(img/logout_icon.svg);
+    background-size: auto 73%;
+    background-repeat: no-repeat;
+    background-position: 50% 60%;
+}
+
+/* NAVIGATION */
+#nav-container {
+    position: relative;
+    z-index: 98;
+
+    background-color: #00B8A9;
+    box-shadow: 0 0 .3rem .3rem rgba(0,0,0,.2);
+
+    width: 100vw;
+
+    top: 0;
+
+    display: grid;
+    grid-auto-flow: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.nav-item {
+    color: #ffffff;
+}
+
+#nav-container a {
+    text-decoration: none;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+.current-location {
+    border-bottom: solid 2px #ffffff;
+}
+
+#nav-container a.current-location {
+    cursor: default;
+    user-select: none;
+    pointer-events: none;
+}
+
+/* IDS FOR NAV LINKS */
+
+#attendance-navbar-link {
+    display: none;
+}
+
+#profiles-navbar-link {
+    /* style profiles link */
+}
+
+#notes-navbar-link {
+    /* style notes link */
+}
+
+#invoices-navbar-link {
+    display: none;
+}
+
+/* NAVIGATION - ANIMATION CLASSES */
+.hide-nav {
+    animation: hide-nav 250ms ease-in both;
+}
+
+@keyframes hide-nav {
+    0% {top: 0;}
+    100% {top: -100%}
+}
+
+.show-nav {
+    animation: show-nav 250ms ease-out both;
+}
+
+@keyframes show-nav {
+    0% {top: -100%;}
+    100% {top: 0}
+}
+
+/* only addresses devices that support hover */
+@media (hover:hover) {
+    .toolbar-button:hover {
+        background-color: rgba(255,255,255,0.3);
+    }
+ }

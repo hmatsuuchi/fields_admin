@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+
+    <title>{{ page_title }}</title>
+
+    {% load static %}
+    <!-- GENERAL STYLES -->
+    <link rel="stylesheet" href="{% static 'customer/styles_general.css' %}?ver=023">
+    <!-- NAV/TOOLBAR STYLES -->
+    <link rel="stylesheet" href="{% static 'customer/styles_nav_toolbar.css' %}?ver=006">
+    <!-- PAGE SPECIFIC STYLES -->
+    <link rel="stylesheet" href="{% static 'customer/new/styles_page.css' %}?ver=011">
+
+    <!-- Noto Sans JP - 400 -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap" rel="stylesheet">
+
+    <!-- JQUERY -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+</head>
+
+<body onload="toggleNav()">
+
+    <section id="customer-single">
+        <div id="top-information" class="top-information">新しいプロフィールを作成しています</div>
+        <div id="customer-card-container">
+            <div class="customer-card edit-new-class">
+                <div class="section-header">名前</div>
+                <div class="label">姓（ローマ字）</div>
+                <input class="name" id="last-name-romaji">
+                <div class="label">名（ローマ字）</div>
+                <input class="name" id="first-name-romaji">
+                <div class="label">姓（漢字）</div>
+                <input class="name" id="last-name-kanji">
+                <div class="label">名（漢字）</div>
+                <input class="name" id="first-name-kanji">
+                <div class="label">姓（カタカナ）</div>
+                <input class="name" id="last-name-katakana">
+                <div class="label">名（カタカナ）</div>
+                <input class="name" id="first-name-katakana">
+                <div class="section-header">住所</div>
+                <div class="label">郵便番号</div>
+                <input class="post-code" id="post-code">
+                <div class="label">府県</div>
+                <select class="prefecture" id="prefecture">
+                    {% for x in prefecture_choices %}
+                    <option value="{{ x.0 }}">{{ x.1 }}</option>
+                    {% endfor %}
+                </select>
+                <div class="label">都市</div>
+                <input class="city" id="city">
+                <div class="label">住所１</div>
+                <input class="address" id="address-1">
+                <div class="label">住所２</div>
+                <input class="address" id="address-2">
+                <div class="section-header">連絡先</div>
+                <div class="label">電話１</div>
+                <input class="phone" id="phone-1">
+                <div class="label">代表１</div>
+                <select class="phone-type" id="phone-1-type">
+                    {% for x in phone_choices %}
+                    <option value="{{ x.0 }}">{{ x.1 }}</option>
+                    {% endfor %}
+                </select>
+                <div class="label">電話２</div>
+                <input class="phone" id="phone-2">
+                <div class="label">代表２</div>
+                <select class="phone-type" id="phone-2-type">
+                    {% for x in phone_choices %}
+                    <option value="{{ x.0 }}">{{ x.1 }}</option>
+                    {% endfor %}
+                </select>
+                <div class="section-header">年齡</div>
+                <div class="label">生年月日</div>
+                <input class="birthday" type="date" id="birthday">
+                <div class="label">学年</div>
+                <select class="grade" id="grade">
+                    {% for x in grade_choices %}
+                    <option value="{{ x.0 }}">{{ x.1 }}</option>
+                    {% endfor %}
+                </select>
+                <div class="section-header">現状</div>
+                <div class="label">入学状況</div>
+                <div class="radio-container" id="status-container">
+                    {% for x in status_choices %}
+                    <div class="radio-button {% if forloop.first %} status-active {% endif %}" onClick="statusUpdate({{ x.0 }})" id="status-{{ x.0 }}">{{ x.1 }}</div>
+                    {% endfor %}
+                </div>
+                <input type="hidden" id="status" value=0>
+                <div class="label">支払方法</div>
+                <div class="radio-container" id="payment-container">
+                    {% for x in payment_method_choices %}
+                    <div class="radio-button {% if forloop.first %} payment-active {% endif %}" onClick="paymentUpdate({{ x.0 }})" id="payment-{{ x.0 }}">{{ x.1 }}</div>
+                    {% endfor %}
+                </div>
+                <input type="hidden" id="payment-method" value=0>
+                <div id="bottom-buttons" class="bottom-buttons">
+                    <a id="back-button" class="button" href='{{ return_link }}'>戻る</a>
+                    <div id="create-button" class="button" onClick="createCustomer('{{ csrf_token }}')">作成</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div id="toolbar-container">
+            <div id="buttons-container">
+                <div id="toolbar-logo"></div>
+                <div id="button-group">
+                    <a class="toolbar-button" href="/user_profile/logout" id="logout-button"></a>
+                </div>
+            </div>
+            <div id="nav-container">
+                <a id="class-list-navbar-link" class="nav-item" href="/class_list/browse">授業</a>
+                <a id="profiles-navbar-link" class="nav-item" href="/customer/browse">生徒</a>
+                <a id="notes-navbar-link" class="nav-item" href="/customer/notes">日程</a>
+                <a id="attendance-taking-navbar-link" class="nav-item" href="/attendance/">出欠</a>
+                <a id="analytics-dashboard-navbar-link" class="nav-item" href="/analytics/dashboard">分析</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- GENERAL SCRIPTS -->
+    <script src="{% static 'customer/scripts_general.js' %}?ver=008"></script>
+    <!-- NAV/TOOLBAR SCRIPTS -->
+    <script src="{% static 'customer/scripts_nav_toolbar.js' %}?ver=005"></script>
+    <!-- PAGE SPECIFIC SCRIPTS -->
+    <script src="{% static 'customer/new/scripts_page.js' %}?ver=004"></script>
+
+</body>
+</html>

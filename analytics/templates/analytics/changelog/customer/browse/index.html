@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+
+    {% load static %}
+
+    <title>{{ page_title }}</title>
+
+    <!-- PAGE SPECIFIC STYLES -->
+    <link rel="stylesheet" href="{% static 'analytics/changelog/customer/browse/styles_page.css' %}?ver=001">
+
+    <!-- JQUERY -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+</head>
+
+<body onload="initialization()">
+
+    <section id="page-meta" data-csrf_token="{{ csrf_token }}" data-batch_number="0"></section>
+
+    <section id="table-section">
+        <table id="table">
+            <tr>
+                <th>ID</th>
+                <th>CHANGELOG CUSTOMER PROFILE</th>
+                <th>CHANGELOG DATE TIME</th>
+                <th>CHANGELOG USER</th>
+                <th>CHANGELOG TYPE</th>
+                <th>LAST NAME ROMAJI</th>
+                <th>FIRST NAME ROMAJI</th>
+                <th>LAST NAME KANJI</th>
+                <th>FIRST NAME KANJI</th>
+                <th>LAST NAME KATAKANA</th>
+                <th>FIRST NAME KATAKANA</th>
+                <th>POST CODE</th>
+                <th>PREFECTURE</th>
+                <th>CITY</th>
+                <th>ADDRESS 1</th>
+                <th>ADDRESS 2</th>
+                <th>PHONE 1</th>
+                <th>PHONE 1 TYPE</th>
+                <th>PHONE 2</th>
+                <th>PHONE 2 TYPE</th>
+                <th>BIRTHDAY</th>
+                <th>GRADE</th>
+                <th>STATUS</th>
+                <th>PAYMENT METHOD</th>
+                <th>ARCHIVED</th>
+            </tr>
+        </table>
+    </section>
+
+    <section>
+        <button id="load-more-button" onclick="getChangelogClasslistAll()">LOAD ADDITIONAL RECORDS</button>
+    </section>
+
+    <!-- PAGE SPECIFIC SCRIPTS -->
+    <script src="{% static 'analytics/changelog/customer/browse/scripts_page.js' %}?ver=002"></script>
+
+</body>
+</html>

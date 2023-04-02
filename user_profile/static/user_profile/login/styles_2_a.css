@@ -1,0 +1,44 @@
+html, input {
+    font-family: 'Noto Sans JP', sans-serif;
+}
+
+#login {
+    padding: 0 1rem;
+}
+
+#login-container {
+    border: solid 1px #000000;
+    background-color: #ffffff;
+    display: grid;
+    margin: 5rem auto;
+    padding: .75rem;
+    border-radius: .5rem;
+    display: grid;
+    justify-content: center;
+    max-width: 400px;
+
+}
+
+#title {
+    text-align: center;
+    font-size: 4rem;
+    font-weight: 100;
+}
+
+#login-container input {
+    margin-bottom: 1rem;
+    min-width: 175px;
+    max-width: 250px;
+    font-size: 1.2rem;
+}
+
+#login-button {
+    background-color: #00b8a9;
+    color: #ffffff;
+    justify-self: center;
+    border-radius: .5rem;
+    text-align: center;
+    max-width: 100px;
+    padding: .3rem 1rem;
+    cursor: pointer;
+}

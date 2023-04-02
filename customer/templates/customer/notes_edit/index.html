@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <!-- prevent autoformat of telephone numbers -->
+    <meta name="format-detection" content="telephone=no">
+
+    {% load static %}
+
+    <!-- Apple homescreen icons -->
+    <link rel="apple-touch-icon" href="{% static 'customer/touch-icon-iphone.png' %}">
+    <link rel="apple-touch-icon" sizes="152x152" href="{% static 'customer/touch-icon-ipad.png' %}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'customer/touch-icon-iphone-retina.png' %}">
+    <link rel="apple-touch-icon" sizes="167x167" href="{% static 'customer/touch-icon-ipad-retina.png' %}">
+
+    <title>{{ page_title }}</title>
+
+    <!-- GENERAL STYLES -->
+    <link rel="stylesheet" href="{% static 'customer/styles_general.css' %}?ver=014">
+    <!-- NAV/TOOLBAR STYLES -->
+    <link rel="stylesheet" href="{% static 'customer/styles_nav_toolbar.css' %}?ver=003">
+    <!-- PAGE SPECIFIC STYLES -->
+    <link rel="stylesheet" href="{% static 'customer/notes_edit/styles_page.css' %}?ver=009">
+
+    <!-- Noto Sans JP - 400 -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap" rel="stylesheet">
+
+    <!-- JQUERY -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+</head>
+
+<body onload="noteEventListeners()">
+
+    <section id="new-edit-note">
+        <div class="top-information">「{{ note_data.customer_name }}」のイベントを編集しています</div>
+        <div id="new-edit-note-container" class="edit-new-class">
+            <div class="label">生徒名</div>
+            <div id="customer-container">
+                <input id="new-customer-input" class="new-note-input" value="{{ note_data.customer_name }}">
+                <input id="new-customer-input-hidden" type="hidden" value="{{ note_data.customer_id }}">
+                <div id="customer-choice-list-container">
+                    {% for x in all_student_list %}
+                    <div id="s-{{ x.0 }}" class="customer-choice-item display-student-choice" data-meta="{{ x.3 }}{{ x.4 }}{{ x.5 }}{{ x.6 }}" onmousedown="selectStudentChoice('{{ x.0 }}', '{{ x.1 }} {{ x.2 }}')">{{ x.1 }} {{ x.2 }}</div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="label">日付</div>
+            <input id="new-date-input" class="new-note-input" type="date" value='{{ note_data.date|date:"Y-m-d" }}'>
+
+            <div class="label">時間</div>
+    
+            <input id="new-time-input" class="new-note-input" type="time"{% if note_data.time != None %} value='{{ note_data.time|time:"H:i" }}'{% endif %}>
+
+            <div class="label">タグ</div>
+            <select id="new-type-input" class="new-note-input">
+                {% for x in all_type_list %}
+                <option value="{{ x.0 }}"{% if x.0 == note_data.type %} selected{% endif %}>{{ x.1 }}</option>
+                {% endfor %}
+            </select>
+
+            <div class="label">講師</div>
+            <select id="new-instructor-input" class="new-note-input">
+                {% for x in all_instructor_list %}
+                <option value="{{ x.0 }}"{% if x.0 == note_data.instructor %} selected{% endif %}>{{ x.1 }}</option>
+                {% endfor %}
+            </select>
+            <div class="label">講師</div>
+            <select id="new-instructor-2-input" class="new-note-input">
+                {% for x in all_instructor_list %}
+                <option value="{{ x.0 }}"{% if x.0 == note_data.instructor_2 %} selected{% endif %}>{{ x.1 }}</option>
+                {% endfor %}
+            </select>
+
+            <div class="label">コメント</div>
+            <textarea id="new-note-text-input" class="new-note-input" rows="5">{% if note_data.note_text != 'None' %}{{ note_data.note_text }}{% endif %}</textarea>
+
+            <div class="label">アーカイブ</div>
+            <div id="archive-button-container" onclick="archiveProfile()" class="{% if note_data.archived %}archived{% endif %}">
+                <div id="archive-button-icon"></div>
+                <div id="archive-dot"></div>
+            </div>
+            <input type="hidden" id='archived' value="{{ note_data.archived }}">
+
+            <div id="new-edit-button-container" class="bottom-buttons">
+                <a id="delete-button" class="button" href="/customer/notes_delete/{{ note_data.id }}?return_link={{ return_link }}">削除</a>
+                <div id="button-sub-container">
+                    <a id="back-button" class="button" href="{{ return_link }}">戻る</a>
+                    <div id="new-edit-submit-button" class="button" onclick="editNote('{{ csrf_token }}', '{{ edit_note }}')">編集</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div id="toolbar-container">
+            <div id="buttons-container">
+                <div id="toolbar-logo"></div>
+                <div id="button-group">
+                    <a class="toolbar-button" href="/user_profile/logout" id="logout-button"></a>
+                </div>
+            </div>
+            <div id="nav-container">
+                <a id="class-list-navbar-link" class="nav-item" href="/class_list/browse">授業</a>
+                <a id="profiles-navbar-link" class="nav-item" href="/customer/browse">生徒</a>
+                <a id="notes-navbar-link" class="nav-item" href="/customer/notes">日程</a>
+                <a id="attendance-taking-navbar-link" class="nav-item" href="/attendance/">出欠</a>
+                <a id="analytics-dashboard-navbar-link" class="nav-item" href="/analytics/dashboard">分析</a>
+            </div>    
+        </div>
+    </section>
+
+    <!-- GENERAL SCRIPTS -->
+    <script src="{% static 'customer/scripts_general.js' %}?ver=002"></script>
+    <!-- NAV/TOOLBAR SCRIPTS -->
+    <script src="{% static 'customer/scripts_nav_toolbar.js' %}?ver=001"></script>
+    <!-- PAGE SPECIFIC SCRIPTS -->
+    <script src="{% static 'customer/notes_edit/scripts_page.js' %}?ver=021"></script>
+
+</body>
+</html>

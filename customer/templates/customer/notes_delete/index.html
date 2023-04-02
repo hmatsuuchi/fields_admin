@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <!-- prevent autoformat of telephone numbers -->
+    <meta name="format-detection" content="telephone=no">
+
+    {% load static %}
+
+    <!-- Apple homescreen icons -->
+    <link rel="apple-touch-icon" href="{% static 'customer/touch-icon-iphone.png' %}">
+    <link rel="apple-touch-icon" sizes="152x152" href="{% static 'customer/touch-icon-ipad.png' %}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'customer/touch-icon-iphone-retina.png' %}">
+    <link rel="apple-touch-icon" sizes="167x167" href="{% static 'customer/touch-icon-ipad-retina.png' %}">
+
+    <title>{{ page_title }}</title>
+
+    <!-- GENERAL STYLES -->
+    <link rel="stylesheet" href="{% static 'customer/styles_general.css' %}?ver=001">
+    <!-- NAV/TOOLBAR STYLES -->
+    <link rel="stylesheet" href="{% static 'customer/styles_nav_toolbar.css' %}?ver=001">
+    <!-- PAGE SPECIFIC STYLES -->
+    <link rel="stylesheet" href="{% static 'customer/notes_delete/styles_page.css' %}?ver=009">
+
+    <!-- Noto Sans JP - 400 -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap" rel="stylesheet">
+
+    <!-- JQUERY -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+</head>
+
+<body>
+
+    <section id="timeline">
+        <div class="top-information">「{{ note_data.customer_name }}」のイベントを削除しますか？</div>
+        <div id="primary-container">
+            <div class="date-container">
+                <div class="date-container-date">{{ note_data.container_date|date:'Y年m月j日（D）' }}</div>
+                <div class="note-container">
+                    <div class="note-header">
+                        {% if note_data.instructor != None and note_data.instructor_2 == None %}
+                        <div id="instructor-1" class="instructor" style="background-image: url('/static/customer/notes/img/instructors/{{ note_data.instructor_img_url }}.svg');"></div>
+                        {% endif %}
+                        {% if note_data.instructor == None and note_data.instructor_2 != None %}
+                        <div id="instructor-2" class="instructor" style="background-image: url('/static/customer/notes/img/instructors/{{ note_data.instructor_2_img_url }}.svg');"></div>
+                        {% endif %}
+                        {% if note_data.instructor != None and note_data.instructor_2 != None %}
+                        <div id="instructor-1" class="instructor" style="background-image: url('/static/customer/notes/img/instructors/{{ note_data.instructor_img_url }}.svg');"></div>
+                        <div id="instructor-2" class="instructor instructor-2" style="background-image: url('/static/customer/notes/img/instructors/{{ note_data.instructor_2_img_url }}.svg');"></div>
+                        {% endif %}
+
+                        <div class="title">{{ note_data.title }}</div>
+                        <div class="note-subtitle">{% if note_data.time != None %}{{ note_data.time }}{% endif %} {{ note_data.customer_name }}{% if note_data.grade != '-------' %}（{{ note_data.grade }}）{% endif %}</div>
+                    </div>
+                    <div class="note-body">
+                        <div class="note-text">{{ note_data.note_text }}</div>
+                        <div class="name-kanji">{{ note_data.customer_name }}</div>
+                        <div class="name-katakana">{{ note_data.name_katakana }}</div>
+                        <div class="name-romaji">{{ note_data.name_romaji }}</div>
+                        <div class="note-date">{{ note_data.note_date }}</div>
+                        {% if note_data.time != None %}<div class="note-time">{{ note_data.time }}</div>{% endif %}
+                        {% if note_data.instructor.id != None and note_data.instructor_2.id == None %}<div class="note-instructor">{{ note_data.instructor_name }}</div>{% endif %}
+                        {% if note_data.instructor_2.id != None and note_data.instructor.id == None %}<div class="note-instructor">{{ note_data.instructor_2_name }}</div>{% endif %}
+                        {% if note_data.instructor.id != None and note_data.instructor_2.id != None %}<div class="note-instructor">{{ note_data.instructor_name }}・{{ note_data.instructor_2_name }}</div>{% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="delete-confirmation">
+        <div id="delete-confirmation-container">
+            <div id="delete-button" class="button" onclick="deleteNote('{{ csrf_token }}', {{ note_id }})">はい、大丈夫です</div>
+            <a id="back-button" class="button" href="../notes_edit?return_link={{ return_link }}&edit_note={{ note_id }}">戻る</a>
+        </div>
+    </section>
+
+    <section>
+        <div id="toolbar-container">
+            <div id="buttons-container">
+                <div id="toolbar-logo"></div>
+                <div id="button-group">
+                    <a class="toolbar-button" href="/user_profile/logout" id="logout-button"></a>
+                </div>
+            </div>
+            <div id="nav-container">
+                <a id="class-list-navbar-link" class="nav-item" href="/class_list/browse">授業</a>
+                <a id="profiles-navbar-link" class="nav-item" href="/customer/browse">生徒</a>
+                <a id="notes-navbar-link" class="nav-item" href="/customer/notes">日程</a>
+                <a id="attendance-taking-navbar-link" class="nav-item" href="/attendance/">出欠</a>
+                <a id="analytics-dashboard-navbar-link" class="nav-item" href="/analytics/dashboard">分析</a>
+            </div>    
+        </div>
+    </section>
+
+    <!-- GENERAL SCRIPTS -->
+    <script src="{% static 'customer/scripts_general.js' %}?ver=002"></script>
+    <!-- NAV/TOOLBAR SCRIPTS -->
+    <script src="{% static 'customer/scripts_nav_toolbar.js' %}?ver=001"></script>
+    <!-- PAGE SPECIFIC SCRIPTS -->
+    <script src="{% static 'customer/notes_delete/scripts_page.js' %}?ver=007"></script>
+
+</body>
+</html>

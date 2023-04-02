@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+
+    {% load static %}
+
+    <title>{{ page_title }}</title>
+
+    <!-- GENERAL STYLES -->
+    <link rel="stylesheet" href="{% static 'class_list/styles_general.css' %}?ver=011">
+    <!-- NAV/TOOLBAR STYLES -->
+    <link rel="stylesheet" href="{% static 'class_list/styles_nav_toolbar.css' %}?ver=004">
+    <!-- PAGE SPECIFIC STYLES -->
+    <link rel="stylesheet" href="{% static 'class_list/browse/styles_page.css' %}?ver=051">
+
+    <!-- Noto Sans JP - 400 -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap" rel="stylesheet">
+
+    <!-- JQUERY -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+</head>
+
+<body onload="loadClassRecords('{{csrf_token}}', 'RETRIEVE_ALL'), toggleNav(), initializingScripts()" style="pointer-events: none;">
+    <!-- PAGE META DATA -->
+    <div id="page-meta" data-batch_number="0" data-csrf="{{ csrf_token }}" data-display_archived="{{ display_archived_classes }}"></div>
+
+    <section id="top-information-section"></section>
+
+    <section id="class-cards-section">
+        <div id="class-cards-primary-container"></div>
+    </section>
+    
+    <div id="loading-container"></div>
+
+    <section>
+        <div id="toolbar-container">
+            <div id="buttons-container">
+                <div id="toolbar-logo"></div>
+                <div id="button-group">
+                    <a class="toolbar-button" href="/user_profile/logout" id="logout-button"></a>
+                    <div class="toolbar-button" id="day-filter-button" onclick="toggleDayOfWeekDisplay()"></div>
+                    <div id="buttons-container-sub-menu" class="disable-clicks">
+                        <div class="button-sub-menu-title">曜日</div>
+                        <div id="day-select-container" data-selected_days="{{ selected_days }}">
+                            <div id="day-7" class="day-select-button" onclick="toggleDayFilter('day-7')"></div>
+                            <div id="day-0" class="day-select-button" onclick="toggleDayFilter('day-0')"></div>
+                            <div id="day-1" class="day-select-button" onclick="toggleDayFilter('day-1')"></div>
+                            <div id="day-2" class="day-select-button" onclick="toggleDayFilter('day-2')"></div>
+                            <div id="day-3" class="day-select-button" onclick="toggleDayFilter('day-3')"></div>
+                            <div id="day-4" class="day-select-button" onclick="toggleDayFilter('day-4')"></div>
+                            <div id="day-5" class="day-select-button" onclick="toggleDayFilter('day-5')"></div>
+                            <div id="day-6" class="day-select-button" onclick="toggleDayFilter('day-6')"></div>
+                        </div>
+                        <div class="button-sub-menu-title">講師</div>
+                        <div id="instructor-select-container" data-selected_instructors="{{ selected_instructors }}">
+                            <div id="instructor-0" class="instructor-select-button" onclick="toggleInstructorDisplay('instructor-0')"></div> <!-- NO INSTRUCTOR -->
+                            {% for x in active_instructor_profiles %}
+                                <div id="instructor-{{ x.user.id }}" class="instructor-select-button" onclick="toggleInstructorDisplay('instructor-{{ x.user.id }}')"></div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <a class="toolbar-button" href="/class_list/create?return_link={{ return_link }}" id="add-button"></a>
+                    <div class="toolbar-button{% if display_archived_classes == True %} archive-button-active{% endif %}" id="archive-button" onclick="toggleArchived()"></div>
+                </div>
+            </div>
+            <div id="search-container">
+                <input id="search-input" type="text" tabindex="1">
+                <div id="search-submit-button-container">
+                    <div>検索</div>
+                </div>
+            </div>
+            <div id="nav-container">
+                <a id="class-list-navbar-link" class="nav-item current-location" href="/class_list/browse">授業</a>
+                <a id="profiles-navbar-link" class="nav-item" href="/customer/browse">生徒</a>
+                <a id="notes-navbar-link" class="nav-item" href="/customer/notes">日程</a>
+                <a id="attendance-taking-navbar-link" class="nav-item" href="/attendance/">出欠</a>
+                <a id="analytics-dashboard-navbar-link" class="nav-item" href="/analytics/dashboard">分析</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- GENERAL SCRIPTS -->
+    <script src="{% static 'class_list/scripts_general.js' %}?ver=009"></script>
+    <!-- NAV/TOOLBAR SCRIPTS -->
+    <script src="{% static 'class_list/scripts_nav_toolbar.js' %}?ver=004"></script>
+    <!-- PAGE SPECIFIC SCRIPTS -->
+    <script src="{% static 'class_list/browse/scripts_page.js' %}?ver=069"></script>
+
+</body>
+</html>

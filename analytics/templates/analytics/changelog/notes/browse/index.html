@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+
+    {% load static %}
+
+    <title>{{ page_title }}</title>
+
+    <!-- PAGE SPECIFIC STYLES -->
+    <link rel="stylesheet" href="{% static 'analytics/changelog/notes/browse/styles_page.css' %}?ver=001">
+
+    <!-- JQUERY -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+</head>
+
+<body onload="initialization()">
+
+    <section id="page-meta" data-csrf_token="{{ csrf_token }}" data-batch_number="0"></section>
+
+    <section id="table-section">
+        <table id="table">
+            <tr>
+                <th>ID</th>
+                <th>CHANGELOG NOTE</th>
+                <th>CHANGELOG DATE TIME</th>
+                <th>CHANGELOG USER</th>
+                <th>CHANGELOG TYPE</th>
+                <th>CUSTOMER ID</th>
+                <th>DATE</th>
+                <th>TIME</th>
+                <th>TYPE</th>
+                <th>INSTRUCTOR 1</th>
+                <th>INSTRUCTOR 2</th>
+                <th>NOTE TEXT</th>
+                <th>ARCHIVED</th>
+            </tr>
+        </table>
+    </section>
+
+    <section>
+        <button id="load-more-button" onclick="getChangelogClasslistAll()">LOAD ADDITIONAL RECORDS</button>
+    </section>
+
+    <!-- PAGE SPECIFIC SCRIPTS -->
+    <script src="{% static 'analytics/changelog/notes/browse/scripts_page.js' %}?ver=001"></script>
+
+</body>
+</html>

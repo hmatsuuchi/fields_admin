@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+
+    {% load static %}
+
+    <title>{{ page_title }}</title>
+
+    <!-- GENERAL STYLES -->
+    <link rel="stylesheet" href="{% static 'attendance/styles_general.css' %}?ver=002">
+    <!-- NAV/TOOLBAR STYLES -->
+    <link rel="stylesheet" href="{% static 'attendance/styles_nav_toolbar.css' %}?ver=004">
+    <!-- PAGE SPECIFIC STYLES -->
+    <link rel="stylesheet" href="{% static 'attendance/styles_page.css' %}?ver=085">
+
+    <!-- Noto Sans JP - 400 -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap" rel="stylesheet">
+
+    <!-- JQUERY -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+</head>
+
+<body onload="toggleNav(), initialization()">
+    <div id="page-meta" style="display: none;" data-csrf="{{ csrf_token }}" data-expanded_view_active="{{ expanded_view_active }}"></div>
+
+    <section id="date-nav"></section>
+    <section id="new-attendance" class="{% if expanded_view_active != True %}display-none{% endif %}"></section>
+    <section id="loading-container"></section>
+    <section id="attendance" class="{% if expanded_view_active != True %}compact{% endif %}"></section>
+    <section id="progress"></section>
+
+    <div id="new-class-overlay" class="select-overlay"></div>
+    <div id="new-class-select-container" class="choice-select-container"></div>
+
+    <div id="new-student-overlay" class="select-overlay"></div>
+    <div id="new-student-select-container" class="choice-select-container"></div>
+
+    <div id="confirmation-overlay" class="select-overlay"></div>
+    <div id="confirmation-container" class="confirmation-container"></div>
+
+    <section>
+        <div id="toolbar-container">
+            <div id="buttons-container">
+                <div id="toolbar-logo"></div>
+                <div id="button-group">
+                    <a class="toolbar-button{% if expanded_view_active == True %} active{% endif %}" onclick="toggleExpandedView()" id="toggle-expanded-view-button"></a>
+                    <a class="toolbar-button" onclick="populateAttendance()" id="populate-attendance-button"></a>
+                    <a class="toolbar-button" href="/user_profile/logout" id="logout-button"></a>
+                </div>
+            </div>
+            <div id="nav-container">
+                <a id="class-list-navbar-link" class="nav-item" href="/class_list/browse">授業</a>
+                <a id="profiles-navbar-link" class="nav-item" href="/customer/browse">生徒</a>
+                <a id="notes-navbar-link" class="nav-item" href="/customer/notes">日程</a>
+                <a id="attendance-taking-navbar-link" class="nav-item current-location" href="/attendance/">出欠</a>
+                <a id="analytics-dashboard-navbar-link" class="nav-item" href="/analytics/dashboard">分析</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- GENERAL SCRIPTS -->
+    <script src="{% static 'attendance/scripts_general.js' %}?ver=002"></script>
+    <!-- NAV/TOOLBAR SCRIPTS -->
+    <script src="{% static 'attendance/scripts_nav_toolbar.js' %}?ver=003"></script>
+    <!-- PAGE SPECIFIC SCRIPTS -->
+    <script src="{% static 'attendance/scripts_page.js' %}?ver=166"></script>
+
+</body>
+</html>

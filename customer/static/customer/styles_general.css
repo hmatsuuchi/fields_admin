@@ -1,0 +1,549 @@
+html, input, textarea {
+    font-family: 'Noto Sans JP', sans-serif;
+}
+
+body {
+    margin: 0;
+    -webkit-tap-highlight-color: transparent; /* iOS click shadow */
+}
+
+.display-none {
+    display: none!important;
+}
+
+/* removes default styling for telephone numbers on iOS */
+a[href^="tel"] {
+    color: inherit;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+input#birthday {
+    padding: 0 .4rem;
+}
+
+input, select, textarea {
+    border: solid 1px #000000;
+    border-radius: .2rem;
+    background-color: #ffffff;
+    font-size: 1.2rem;
+    padding: .3rem;
+}
+
+textarea {
+    overflow-y: scroll;
+}
+
+/* USED BY: ALL PROFILES, PROFILE DETAILS */
+
+/* TOP INFORMATION */
+.top-information {
+    color: #5f5f5f;
+    font-size: 1.2rem;
+    text-align: center;
+    margin-bottom: .5rem;
+}
+
+/* BODY */
+body {
+    background-color: #dad6d6;
+}
+
+/* CUSTOMER CARDS - CARDS */
+#customer-all {
+    margin: 8.5rem 1rem 10rem 1rem;
+    /* min-height: 120vh; */
+}
+
+#customer-single {
+    margin: 6rem 1rem 1rem 1rem;
+}
+
+#customer-card-container {
+    display: grid;
+    grid-row-gap: 1rem;
+}
+
+.customer-card {
+    width: 100%;
+
+    background-color: #ffffff;
+
+    border: solid 1px #adadad;
+    border-radius: .2rem;
+
+    box-shadow: 0.2rem 0.2rem 0.4rem rgb(0 0 0 / 15%);
+
+    overflow: hidden;
+
+    display: grid;
+    grid-template-rows: 2.5rem auto 2.5rem;
+}
+
+/* CUSTOMER CARDS - HEADER */
+.card-header {
+    padding: .3rem .5rem;
+
+    display: grid;
+    justify-content: right;
+    grid-auto-flow: column;
+    align-items: center;
+}
+
+.pre-enrolled {
+    background-color: #fdbc00;
+}
+
+.enrolled {
+    background-color: #00B8A9;
+}
+
+.short-absence {
+    background-color: #F6416C;
+}
+
+.long-absence {
+    background-color: #000000;
+}
+
+.status {
+    color: #ffffff;
+    font-size: 1.2rem;
+}
+
+/* ARCHIVED ITEMS */
+.archived .card-header {
+    opacity: .7;
+}
+
+.archived .card-header {
+    justify-content: space-between;
+}
+
+.archived-icon {
+    height: 100%;
+    width: 1.5rem;
+    max-height: 1.5rem;
+
+    justify-self: left;
+    align-self: center;
+
+    background-image: url(img/archive_false.svg);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+}
+
+#archive-button {
+    background-image: url(img/archive_false.svg);
+    background-size: auto 73%;
+    background-repeat: no-repeat;
+    background-position: 50% 60%;
+}
+
+#archive-button.archive-button-active {
+    background-image: url(img/archive_true.svg);
+    background-color: #ffffff;
+}
+
+/* CUSTOMER CARDS - CARD BODY */
+.card-body {
+    padding: .5rem;
+}
+
+.name-container {
+    margin-bottom: .8rem;
+}
+
+.full-name-ja {
+    font-size: 1.1rem;
+}
+
+.sub-name {
+    color: #3a3939;
+    font-size: 1rem;
+}
+
+.bottom-separator {
+    margin-bottom: .2rem;
+    padding-bottom: .2rem;
+
+    border-bottom: solid 1px #bdbdbd;
+}
+
+.bottom-separator:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+/* CUSTOMER CARDS - FOOTER */
+.card-footer {
+    padding: .5rem;
+    background-color: #f1f1f1;
+
+    border-top: solid 1px #bdbdbd;
+
+    display: grid;
+    grid-auto-flow: column;
+    justify-items: center;
+    grid-column-gap: 1rem;
+    align-items: center;
+}
+
+.edit {
+    height: 1.5rem;
+    width: 1.5rem;
+    
+    background-image: url('/static/customer/img/edit.svg');
+    background-repeat: no-repeat;
+    background-size:  contain;
+    background-position: 50%;
+}
+
+.archive {
+    height: 1.5rem;
+    width: 1.5rem;
+    
+    background-image: url('/static/customer/img/archive.svg');
+    background-repeat: no-repeat;
+    background-size:  contain;
+    background-position: 50%;
+}
+
+.details {
+    height: 1.5rem;
+    width: 1.5rem;
+    
+    /* background-image: url('/static/customer/img/details.svg'); */
+    background-image: url('/static/customer/img/profile.svg');
+    background-repeat: no-repeat;
+    background-size:  contain;
+    background-position: 50%;
+}
+
+.notes {
+    height: 1.5rem;
+    width: 1.5rem;
+    
+    background-image: url('/static/customer/img/check_false.svg');
+    background-repeat: no-repeat;
+    background-size:  contain;
+    background-position: 50%;
+
+    /* cursor: pointer; */
+    cursor: auto;
+}
+
+.flag {
+    height: 1.5rem;
+    width: 1.5rem;
+    
+    background-image: url('/static/customer/img/flag_false1.svg');
+    background-repeat: no-repeat;
+    background-size:  contain;
+    background-position: 50%;
+
+    cursor: pointer;
+}
+
+.flag-true {
+    background-image: url('/static/customer/img/flag_true1.svg');
+}
+
+.notes-true {
+    background-image: url('/static/customer/img/check_true.svg');
+}
+
+.inactive {
+    opacity: .5;
+}
+
+/* NEW & EDIT PROFILE */
+#customer-card-container {
+    grid-template-columns: 1fr;
+    justify-items: center;
+}
+
+.edit-new-class {
+    width: calc(100% - 2rem);
+    padding: 1rem;
+    max-width: 600px;
+    grid-template-rows: auto;
+}
+
+.customer-card select {
+    font-size: 1.2rem;
+    padding: .3rem;
+
+    cursor: pointer;
+}
+
+input:focus, select:focus, textarea:focus, div:focus {
+    outline: none!important;
+    box-shadow: 0 0 0 2px rgba(0,0,0,.4);
+}
+
+.section-header {
+    text-align: right;
+
+    border-bottom: solid 1px #000000;
+
+    margin-top: 3rem;
+}
+
+.section-header:first-child {
+    margin-top: 0;
+}
+
+.label {
+    margin-top: .7rem;
+}
+
+.name, .city {
+    width: 10rem;
+}
+
+.post-code, .prefecture, .phone-type, .grade {
+    width: 7rem;
+}
+
+.address {
+    width: 85%;
+    max-width: 20rem;
+}
+
+.phone {
+    width: 12rem;
+}
+
+input[type=date] {
+    width: 11rem;
+}
+
+input[type=time] {
+    width: 6rem;
+}
+
+/* STATUS & PAYMENT BUTTONS */
+.radio-container {
+    display: grid;
+    grid-auto-flow: column;
+    justify-content: left;
+    margin: 0 0 1.3rem 0;
+}
+
+.radio-button {
+    padding: .3rem .5rem;
+    border: solid 1px #000000;
+    border-right: none;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.radio-button:last-child {
+    border-right: solid 1px #000000;
+}
+
+.status-active {
+    background-color: #00b8a9;
+}
+
+.payment-active {
+    background-color: #00b8a9;
+}
+
+/* BOTTOM BUTTONS */
+.bottom-buttons {
+    display: grid;
+    grid-auto-flow: row;
+    margin-top: 3rem;
+    grid-row-gap: .75rem;
+    text-align: center;
+}
+
+#button-sub-container {
+    display: grid;
+    grid-auto-flow: row;
+    grid-row-gap: .75rem;
+    text-align: center;
+}
+
+.button {
+    padding: .5rem 1.2rem;
+    background-color: #00b8a9;
+    color: #ffffff;
+    border-radius: .5rem;
+    text-decoration: none;
+
+    cursor: pointer;
+}
+
+#back-button {
+    background-color: #505050;
+}
+
+#delete-button {
+    background-color: #F6416C;
+}
+
+/* ARCHIVE BUTTON STYLING */
+/* The archive button exists on the edit student profile and the new/edit not page */
+
+#archive-button-container {
+    height: 3rem;
+    width: 5.8rem;
+
+    border-radius: 5.8rem;
+
+    background-color: #dad6d6;
+
+    cursor: pointer;
+
+    transition: 350ms;
+
+    display: grid;
+    /* align-items: center; */
+}
+
+#archive-button-container.archived {
+    background-color: #FFDE7D;
+}
+
+#archive-button-icon {
+    position: absolute;
+    height: 1.5rem;
+    width: 1.5rem;
+
+    margin-top: .75rem;
+    margin-left: .95rem;
+
+    background-image: url(/static/customer/archive_toggle.svg);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+}
+
+#archive-dot {
+    position: relative;
+
+    top: .25rem;
+    height: 2.5rem;
+    width: 2.5rem;
+
+    margin: 0 .25rem;
+    border-radius: 2.5rem;
+
+    transition: 350ms;
+
+    background-color: #ffffff;
+}
+
+#archive-button-container.archived #archive-dot {
+    transform: translateX(2.8rem);
+}
+
+/* style for missing required inputs */
+.missing-input {
+    box-shadow: 0 0 0 2px #F6416C;
+}
+
+/* LOADING */
+.loading-container {
+    width: 100%;
+    height: 8rem;
+
+    display: grid;
+    place-content: center;
+}
+
+.loading-spinner {
+    width: 4rem;
+    height: 4rem;
+
+    display: grid;
+    place-content: center;
+}
+
+/* imported spinner */
+.lds-ring {
+    display: inline-block;
+    position: relative;
+    width: 80px;
+    height: 80px;
+}
+.lds-ring div {
+    box-sizing: border-box;
+    display: block;
+    position: absolute;
+    width: 64px;
+    height: 64px;
+    margin: 8px;
+    border: 8px solid #fff;
+    border-radius: 50%;
+    animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+    border-color: #fff transparent transparent transparent;
+}
+.lds-ring div:nth-child(1) {
+    animation-delay: -0.45s;
+}
+.lds-ring div:nth-child(2) {
+    animation-delay: -0.3s;
+}
+.lds-ring div:nth-child(3) {
+    animation-delay: -0.15s;
+}
+@keyframes lds-ring {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {
+    #customer-card-container {
+        grid-template-columns: repeat(2, 1fr);
+        grid-column-gap: 1rem;
+    }
+
+    .bottom-buttons {
+        display: grid;
+        grid-auto-flow: column;
+        margin-top: 3rem;
+        justify-content: space-between;
+        grid-column-gap: .5rem;
+    }
+
+    #button-sub-container {
+        display: grid;
+        grid-auto-flow: column;
+        grid-column-gap: .5rem;
+    }
+}
+
+/* Medium devices (tablets, 768px and up) */
+/* @media (min-width: 768px) { ... } */
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+    #customer-card-container {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* X-Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+    #customer-card-container {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+/* XX-Large devices (larger desktops, 1400px and up) */
+@media (min-width: 1400px) {
+    #customer-card-container {
+        grid-template-columns: repeat(5, 1fr);
+    }
+}
