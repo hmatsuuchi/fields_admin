@@ -1,7 +1,7 @@
 import statistics
 from datetime import datetime, timedelta
 from customer.models import CustomerProfile
-from analytics.models import StudentLifetime, StudentDemographics, LessonsPerStudent
+from analytics.models import StudentLifetime, StudentDemographics, LessonsPerStudent, StudentsInOut
 from attendance.models import Attendance, StudentAttendance
 from class_list.models import ClassList
 
@@ -212,8 +212,8 @@ def calculate_lessons_per_student():
             new_record.save()
 
 def calculate_students_in_out():
-    print("")
-    print("===================================")
+    # print("")
+    # print("===================================")
 
     # current year and month
     today = datetime.now()
@@ -245,23 +245,28 @@ def calculate_students_in_out():
                 dates.append([first, last])
 
     while year <= curr_year:
-        # sets initial values
-        first_count = 0
-        last_count = 0
+        record_search = StudentsInOut.objects.filter(year=year, month=month)
+        if record_search.count() == 0:
+            in_out_record = StudentsInOut()
+            in_out_record.year = year
+            in_out_record.month = month
+        else:
+            in_out_record = record_search[0]
+
+        in_out_record.students_in.clear()
+        in_out_record.students_out.clear()
 
         # increments first record count if students first record is in current month
         # increments last record count if students last record is in current month and more than 28 days ago
         for y in dates:
             if year == y[0].date.year and month == y[0].date.month:
-                first_count += 1
-                print(f"START: {y[0].student}")
+                in_out_record.students_in.add(y[0].student)
+                # print(f"START: {y[0].student}")
             if year == y[1].date.year and month == y[1].date.month and four_weeks_ago.date() > y[1].date:
-                last_count += 1
-                print(f"END: {y[1].student}")
+                in_out_record.students_out.add(y[0].student)
+                # print(f"END: {y[1].student}")
 
-        print("---------------------")
-        print(f"{year}-{month} ({first_count}, {last_count}) [{first_count - last_count}]")
-        print("===================================")
+        in_out_record.save()
 
         # increments year and month
         if year == curr_year and month == curr_month:
@@ -272,4 +277,4 @@ def calculate_students_in_out():
         else:
             month += 1
 
-    print("")
+    # print("")

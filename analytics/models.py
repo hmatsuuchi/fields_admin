@@ -1,5 +1,6 @@
 from datetime import date
 from django.db import models
+from customer.models import CustomerProfile
 
 # ATTENDANCE ANALYTICS
 class AttendanceAnalyticsDay(models.Model):
@@ -134,3 +135,25 @@ class LessonsPerStudent(models.Model):
 
     def __str__(self):
         return str(self.id) + " (" + str(self.last_modified) + ") " + str(self.year) + "/" + str(self.month) + " [" + str(self.lessons_per_student) + "] [" + str(self.multi_lesson_student_count) + "]"
+    
+class StudentsInOut(models.Model):
+    last_modified                   = models.DateTimeField(auto_now=True)
+    year                            = models.IntegerField()
+    month                           = models.IntegerField()
+    students_in                     = models.ManyToManyField(CustomerProfile, related_name="CustomerProfileIn")
+    students_out                    = models.ManyToManyField(CustomerProfile, related_name="CustomerProfileOut")
+
+    @property
+    def students_in_count(self):
+        return self.students_in.count()
+    
+    @property
+    def students_out_count(self):
+        return self.students_out.count()
+    
+    @property
+    def students_net_count(self):
+        return self.students_in_count - self.students_out.count()
+
+    def __str__(self):
+        return str(self.id) + " (" + str(self.last_modified) + ") " + str(self.year) + "/" + str(self.month) + " [" + str(self.students_in_count) + ", " + str(self.students_out_count) + ", " + str(self.students_net_count) + "]"
