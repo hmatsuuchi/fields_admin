@@ -6,7 +6,7 @@ import statistics # remove this import after calculate lessons per student is mo
 
 from datetime import datetime, timedelta
 
-from .models import AttendanceAnalyticsWeek, AttendanceAnalyticsDay, AttendanceAnalyticsMonth, StudentLifetime, StudentDemographics, LessonsPerStudent
+from .models import AttendanceAnalyticsWeek, AttendanceAnalyticsDay, AttendanceAnalyticsMonth, StudentLifetime, StudentDemographics, LessonsPerStudent, StudentsInOut
 from logs.models import AccessLog
 from class_list.models import ClassListChangelog
 from customer.models import CustomerProfile, CustomerProfileChangelog, NotesChangelog
@@ -687,6 +687,50 @@ def AnalyticsAPI(request):
             'month': month,
             'lessonsPerStudent': lessons_per_student,
             'studentCount': student_count,
+        }
+
+    # MODULE 011 - Number of Students In and Out by Month
+    if parameter == 'module_011':
+        records_all = StudentsInOut.objects.all().order_by('-year', '-month')[:24]
+
+        year                = []
+        month               = []
+        students_in_count   = []
+        students_out_count  = []
+        students_in         = []
+        students_out        = []
+
+        for x in reversed(records_all):
+            year.append(str(x.year))
+            month.append(str(x.month))
+
+            sub_list = []
+            for y in x.students_in.all():
+                sub_list.append([
+                    y.last_name_romaji,
+                    y.first_name_romaji,
+                    ])
+            sub_list.sort()
+            students_in.append(sub_list)
+            students_in_count.append(len(sub_list))
+
+            sub_list = []
+            for y in x.students_out.all():
+                sub_list.append([
+                    y.last_name_romaji,
+                    y.first_name_romaji,
+                ])
+            sub_list.sort()
+            students_out.append(sub_list)
+            students_out_count.append(-len(sub_list))
+            
+        data = {
+            'year': year,
+            'month': month,
+            'studentsInCount': students_in_count,
+            'studentsOutCount': students_out_count,
+            'studentsIn': students_in,
+            'studentsOut': students_out,
         }
     
     return JsonResponse(data)
