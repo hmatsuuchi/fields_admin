@@ -61,6 +61,32 @@ def AttendanceAPI(request):
             all_records = all_records.filter(instructor__in=active_instructors_list)
         all_records_serlialized = serializers.serialize("json", all_records)
 
+        # ======= NEW CODE =======
+        previous_content_list = []
+        current_content_list = []
+        previous_date_list = []
+
+        for x in all_records:
+            previous_record = AttendanceModel.objects.all().filter(linked_class=x.linked_class, date__lt=x.date).order_by("-date").first()
+            current_record = x
+
+            previous_record_content = []
+            current_record_content = []
+            
+            if previous_record and previous_record.content.all():
+                previous_content = previous_record.content.all().order_by('content_materials')
+                for y in previous_content:                    
+                    previous_record_content.append({'id': y.id, 'material': y.content_materials.title, 'start': y.content_start, 'end': y.content_end})
+
+            current_content = current_record.content.all().order_by('content_materials')
+            for y in current_content:
+                current_record_content.append({'id': y.id, 'material': y.content_materials.title, 'start': y.content_start, 'end': y.content_end})
+
+            previous_content_list.append(previous_record_content)
+            current_content_list.append(current_record_content)
+            previous_date_list.append(previous_record.date)
+        # ======= END NEW CODE =======
+
         all_classes = ClassList.objects.filter(attendance__in=all_records).distinct()
         all_classes_serialized = serializers.serialize("json", all_classes)
 
@@ -104,6 +130,9 @@ def AttendanceAPI(request):
             'allInstructors': all_instructors_serialized, # all associated instructor data
             'classTypeLookupList': class_type_lookup_list, # dictionary of integer values and matching class type descriptive text
             'allInstructorChoices': instructors, # list of all active instructors for use in dropdown menus
+            'currentContent': current_content_list, # list of all content covered in current attendance record
+            'previousContent': previous_content_list, # list of all content covered in previous attendance record
+            'previousDate': previous_date_list, # list of dates of previous attendance content records
         }
 
     # GET ALL ACTIVE CLASSES

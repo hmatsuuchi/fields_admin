@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+
+    {% load static %}
+
+    <!-- Apple homescreen icons -->
+    <link rel="apple-touch-icon" href="{% static 'materials/touch-icon-iphone.png' %}">
+    <link rel="apple-touch-icon" sizes="152x152" href="{% static 'materials/touch-icon-ipad.png' %}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'materials/touch-icon-iphone-retina.png' %}">
+    <link rel="apple-touch-icon" sizes="167x167" href="{% static 'materials/touch-icon-ipad-retina.png' %}">
+
+    <title>Materials</title>
+
+    <!-- GENERAL STYLES -->
+    <link rel="stylesheet" href="{% static 'materials/styles_general.css' %}?ver=001">
+    <!-- NAV/TOOLBAR STYLES -->
+    <link rel="stylesheet" href="{% static 'materials/styles_nav_toolbar.css' %}?ver=001">
+    <!-- PAGE SPECIFIC STYLES -->
+    <link rel="stylesheet" href="{% static 'materials/styles_page.css' %}?ver=001">
+
+</head>
+
+<body>
+
+    <!-- GENERAL SCRIPTS -->
+    <script src="{% static 'materials/scripts_general.js' %}?ver=001"></script>
+    <!-- NAV/TOOLBAR SCRIPTS -->
+    <script src="{% static 'materials/scripts_nav_toolbar.js' %}?ver=001"></script>
+    <!-- PAGE SPECIFIC SCRIPTS -->
+    <script src="{% static 'materials/scripts_page.js' %}?ver=001"></script>
+
+</body>
+</html>

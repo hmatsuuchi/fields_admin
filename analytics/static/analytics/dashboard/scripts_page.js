@@ -1322,13 +1322,34 @@ function barChart011(targetContainer, data) {
     shortDates.push(`${data.year[i].slice(2, 4)}-${monthWithZero.slice(-2)}`);
   }
 
+  let studentChange = [];
+  var i;
+  for (i = 0; i < data.studentsInCount.length; i++) {
+    studentChange.push(data.studentsInCount[i] + data.studentsOutCount[i]);
+  }
+
   const ctx = targetContainer.getContext("2d");
   const myChart = new Chart(ctx, {
-    type: "bar",
+    // type: "bar",
     data: {
       labels: shortDates,
       datasets: [
         {
+          type: "line",
+          label: "変化",
+          identifier: "net_change",
+          data: studentChange,
+          // backgroundColor: ["rgba(255, 222, 125, .8)"],
+          // borderColor: ["rgba(255, 222, 125, .8)"],
+          // hoverBorderColor: ["rgba(255, 222, 125, .1)"],
+          backgroundColor: ["rgba(0, 0, 0, .4)"],
+          borderColor: ["rgba(0, 0, 0, .4)"],
+          hoverBorderColor: ["(0, 0, 0, .1)"],
+          borderWidth: 1,
+          radius: 4,
+        },
+        {
+          type: "bar",
           label: "入学",
           identifier: "positive",
           data: data.studentsInCount,
@@ -1339,6 +1360,7 @@ function barChart011(targetContainer, data) {
           radius: 4,
         },
         {
+          type: "bar",
           label: "退学",
           identifier: "negative",
           data: data.studentsOutCount,
@@ -1363,10 +1385,12 @@ function barChart011(targetContainer, data) {
                 label = data.studentsIn[context.dataIndex].map((x) => {
                   return ` ${x[0]}, ${x[1]}`;
                 });
-              } else {
+              } else if (label && identifier == "negative") {
                 label = data.studentsOut[context.dataIndex].map((x) => {
                   return ` ${x[0]}, ${x[1]}`;
                 });
+              } else {
+                label = ` ${studentChange[context.dataIndex]}人`;
               }
 
               return label;

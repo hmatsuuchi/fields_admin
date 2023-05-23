@@ -838,6 +838,59 @@ a.student-name-katakana {
     background-repeat: no-repeat;
 }
 
+/* CONTENT CONTAINER */
+.content-container {
+    grid-column: 1 / span 2;
+    grid-row: 3;
+    padding: .5rem;
+
+    font-size: .9rem;
+
+    display: grid;
+}
+
+.lesson-content-heading {
+    margin-bottom: .2rem;
+}
+
+.current-content-heading {
+    margin-top: .5rem;
+}
+
+.content-list {
+    margin-top: .2rem;
+    padding: 0;
+}
+
+.previous-content {
+    border-top: 1px solid #F6416C;
+}
+
+.current-content {
+    border-top: 1px solid #00B8A9;
+}
+
+.content-container ul {
+    margin: 0;
+    padding-left: .5rem;
+}
+
+.content-container li {
+    list-style-type: none;
+    margin: .25rem 0;
+
+    display: grid;
+    grid-auto-flow: column;
+    justify-content: space-between;
+}
+
+.to-from-container {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: repeat(3, 1rem);
+    justify-items: center;
+}
+
 /* FOOTER CONTAINER */
 #attendance .footer-container {
     background-color: #f1f1f1;
@@ -1119,8 +1172,30 @@ a.student-name-katakana {
     .day-of-week-container {
         font-size: 1rem;
     }
+
     .time-container {
         font-size: 1rem;
+    }
+
+    /* lesson content */
+    .content-container {
+        font-size: 1rem;
+    }
+
+    .to-from-container {
+        grid-template-columns: repeat(3, 1.5rem);
+    }
+}
+
+/* Small devices (576px and up) */
+@media (min-width: 576px) {
+    /* lesson content */
+    .content-container {
+        font-size: 1rem;
+    }
+
+    .to-from-container {
+        grid-template-columns: repeat(3, 1.5rem);
     }
 }
 
@@ -1171,5 +1246,10 @@ a.student-name-katakana {
 
     #instructor-select-container #no-instructor-filter-button {
         background-image: url('/static/class_list/img/day_of_week_icons/7.svg');
+    }
+
+    /* lesson content */
+    .to-from-container {
+        grid-template-columns: repeat(3, 2rem);
     }
 }

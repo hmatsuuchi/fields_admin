@@ -3,6 +3,16 @@ from django.db import models
 from django.contrib.auth.models import User
 from class_list.models import ClassList
 from customer.models import CustomerProfile
+from materials.models import Materials
+
+# materials and pages covered in lesson
+class Content(models.Model):
+    content_materials   = models.ForeignKey(Materials, on_delete=models.CASCADE, null=True, blank=True)
+    content_start       = models.IntegerField(null=True, blank=True)
+    content_end         = models.IntegerField(null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.id} - {self.content_materials.title} [{self.content_start} - {self.content_end}]"
 
 # primary attendance record
 class Attendance(models.Model):
@@ -10,6 +20,7 @@ class Attendance(models.Model):
     date                = models.DateField(null=True, blank=True)
     start_time          = models.TimeField(null=True, blank=True)
     instructor          = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
+    content             = models.ManyToManyField(Content)
 
     def __str__(self):
         return str(self.id) + ": " + str(self.date)
