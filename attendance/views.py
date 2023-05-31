@@ -61,7 +61,7 @@ def AttendanceAPI(request):
             all_records = all_records.filter(instructor__in=active_instructors_list)
         all_records_serlialized = serializers.serialize("json", all_records)
 
-        # ======= NEW CODE =======
+        # parses attendance record content
         previous_content_list = []
         current_content_list = []
         previous_date_list = []
@@ -84,8 +84,10 @@ def AttendanceAPI(request):
 
             previous_content_list.append(previous_record_content)
             current_content_list.append(current_record_content)
-            previous_date_list.append(previous_record.date)
-        # ======= END NEW CODE =======
+            if previous_record:
+                previous_date_list.append(previous_record.date)
+            else:
+                previous_date_list.append('no_date')
 
         all_classes = ClassList.objects.filter(attendance__in=all_records).distinct()
         all_classes_serialized = serializers.serialize("json", all_classes)

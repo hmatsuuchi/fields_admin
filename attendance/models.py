@@ -20,7 +20,8 @@ class Attendance(models.Model):
     date                = models.DateField(null=True, blank=True)
     start_time          = models.TimeField(null=True, blank=True)
     instructor          = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
-    content             = models.ManyToManyField(Content)
+    content             = models.ManyToManyField(Content, blank=True)
+    note                = models.TextField(null=True, blank=True)
 
     def __str__(self):
         return str(self.id) + ": " + str(self.date)

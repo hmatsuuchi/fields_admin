@@ -841,16 +841,21 @@ a.student-name-katakana {
 /* CONTENT CONTAINER */
 .content-container {
     grid-column: 1 / span 2;
-    grid-row: 3;
+    grid-row: 4;
     padding: .5rem;
 
     font-size: .9rem;
+
+    user-select: none;
+    -ms-user-select: none;
+    -webkit-user-select: none;
 
     display: grid;
 }
 
 .lesson-content-heading {
     margin-bottom: .2rem;
+    cursor: pointer;
 }
 
 .current-content-heading {
@@ -887,8 +892,80 @@ a.student-name-katakana {
 .to-from-container {
     display: grid;
     grid-auto-flow: column;
-    grid-template-columns: repeat(3, 1rem);
+    grid-template-columns: 1.5rem 1rem 1.5rem;
     justify-items: center;
+}
+
+.to-from-container.single-digit {
+    width: 4rem;
+    grid-template-columns: 1fr;
+}
+
+.start-page {
+    justify-self: right;
+}
+
+.single-digit .start-page {
+    justify-self: center;
+}
+
+.end-page {
+    justify-self: left;
+}
+
+.open-close-tab {
+    cursor: pointer;
+    grid-row: 3;
+    grid-column: 1 / span 2;
+
+    margin-bottom: .5rem;
+
+    display: grid;
+    grid-auto-flow: column;
+    grid-column-gap: 1rem;
+    grid-template-columns: 1fr auto 1fr;
+}
+
+.open-close-tab-icon-container {
+    transition-duration: 250ms;
+}
+
+.open-close-tab-icon-square {
+    height: 1rem;
+    width: 1rem;
+
+    transform: rotate(45deg);
+
+    border-right: 1px solid #000000;
+    border-bottom: 1px solid #000000;
+}
+
+.content-divider-line {
+    height: 1px;
+    background-color: #000000;
+    margin-top: .8rem;
+}
+
+.flip-square .open-close-tab-icon-container {
+    transform: translate(0, .6rem) rotateX(180deg);
+}
+
+.hide-attendance-contents {
+    display: none;
+}
+
+.note-container {
+}
+
+.note-header {
+    margin-bottom: .2rem;
+    margin-top: .5rem
+}
+
+.note-contents {
+    border-top: 1px solid #FFDE7D;
+    font-style: italic;
+    padding: .25rem 0 0 .5rem;
 }
 
 /* FOOTER CONTAINER */
@@ -988,6 +1065,7 @@ a.student-name-katakana {
 }
 
 #attendance.compact .section-title {
+    grid-row: 1;
     margin: 0;
     align-self: end;
     display: grid;
@@ -1183,7 +1261,7 @@ a.student-name-katakana {
     }
 
     .to-from-container {
-        grid-template-columns: repeat(3, 1.5rem);
+        grid-template-columns: 1.5rem 1rem 1.5rem;
     }
 }
 
@@ -1195,7 +1273,7 @@ a.student-name-katakana {
     }
 
     .to-from-container {
-        grid-template-columns: repeat(3, 1.5rem);
+        grid-template-columns: 1.5rem 1rem 1.5rem;
     }
 }
 
@@ -1250,6 +1328,6 @@ a.student-name-katakana {
 
     /* lesson content */
     .to-from-container {
-        grid-template-columns: repeat(3, 2rem);
+        grid-template-columns: 2rem 1rem 2rem;
     }
 }

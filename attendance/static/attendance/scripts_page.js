@@ -244,6 +244,54 @@ function toggleInstructorFilterMenu() {
   menu.classList.toggle("active");
 }
 
+// toggles attendance contents section open and closed
+function toggleAttendanceContentsOpenClose() {
+  this.classList.toggle("flip-square");
+
+  let attendanceContents =
+    this.parentElement.getElementsByClassName("content-container")[0];
+  attendanceContents.classList.toggle("hide-attendance-contents");
+}
+
+function jumpToPreviousDateFromContentLink() {
+  // clears results
+  let attendanceContainer = document.getElementById("attendance");
+  attendanceContainer.innerHTML = "";
+
+  toggleLoadingSpinner("ADD"); // adds loading spinner
+
+  // temporarily sets the progress percentage while new data is loaded and calculated
+  resetProgressPercentage();
+
+  // blurs date nav field
+  let dateNavField = document.getElementById("date-nav-field");
+  dateNavField.value = this.dataset.date;
+  dateNavField.blur();
+
+  let dateField = document.getElementById("date-nav-field");
+  let dateValue = new Date(dateField.value);
+  let year = dateValue.getFullYear();
+  let month = "0" + (dateValue.getMonth() + 1);
+  let date = "0" + dateValue.getDate();
+  let dateString = `${year}-${month.slice(-2)}-${date.slice(-2)}`;
+
+  // updates day of week text
+  let dayOfWeek = document.getElementById("day-of-week");
+  dayOfWeek.innerHTML = dayOfWeekConvert[dateValue.getDay()];
+
+  // appends 'today' to date
+  today = new Date();
+  todayYear = today.getFullYear();
+  todayMonth = "0" + (today.getMonth() + 1);
+  todayDay = "0" + today.getDate();
+  todayString = `${todayYear}-${todayMonth.slice(-2)}-${todayDay.slice(-2)}`;
+  if (dateString == todayString) {
+    dayOfWeek.innerHTML += "(今日)";
+  }
+
+  fetchAttendanceData(); // fetches attendance data for date
+}
+
 // =============== DATE NAVIGATON ===============
 
 // decrement date by one day
@@ -2647,6 +2695,7 @@ function dataBuildRecordsCompact(
   // ATTENDANCE SECTION
   let section = document.getElementById("attendance");
 
+  // iterates through list and generates all attendance records
   var i;
   for (i = 0; i < recordsAll.length; i++) {
     // CLASS DATA
@@ -2808,25 +2857,63 @@ function dataBuildRecordsCompact(
       recordItem.appendChild(attendanceStatusContainer);
     }
 
+    // CONTAINER - ATTENDANCE RECORD CONTAINER - OPEN CLOSE TAB
+    let openCloseTab = document.createElement("div");
+    openCloseTab.classList.add("open-close-tab");
+    openCloseTab.addEventListener("click", toggleAttendanceContentsOpenClose);
+    attendanceContainer.appendChild(openCloseTab);
+
+    // CONTAINER - ATTENDANCE RECORD CONTAINER - OPEN CLOSE TAB - LEFT LINE
+    let leftLine = document.createElement("div");
+    leftLine.classList.add("content-divider-line");
+    openCloseTab.appendChild(leftLine);
+
+    // CONTAINER - ATTENDANCE RECORD CONTAINER - OPEN CLOSE TAB - ICON CONTAINER
+    let openCloseTabIconContainer = document.createElement("div");
+    openCloseTabIconContainer.classList.add("open-close-tab-icon-container");
+    openCloseTab.appendChild(openCloseTabIconContainer);
+
+    // CONTAINER - ATTENDANCE RECORD CONTAINER - OPEN CLOSE TAB - RIGHT LINE
+    let rightLine = document.createElement("div");
+    rightLine.classList.add("content-divider-line");
+    openCloseTab.appendChild(rightLine);
+
+    // CONTAINER - ATTENDANCE RECORD CONTAINER - OPEN CLOSE TAB - ICON CONTAINER - SQUARE
+    let openCloseTabIconSquare = document.createElement("div");
+    openCloseTabIconSquare.classList.add("open-close-tab-icon-square");
+    openCloseTabIconContainer.appendChild(openCloseTabIconSquare);
+
+    // CONTAINER - ATTENDANCE RECORD CONTAINER - CONTENT CONTAINER
+    // this container will be empty for records that do not have associated content
+    let contentContainer = document.createElement("div");
+    contentContainer.classList.add(
+      "content-container",
+      "hide-attendance-contents"
+    );
+    attendanceContainer.appendChild(contentContainer);
+
     // CONTAINER - ATTENDANCE RECORD CONTAINER - CONTENT CONTAINER
     let contentDataCurrent = currentContent[i];
     let contentDataPrevious = previousContent[i];
     if ((contentDataPrevious.length > 0) | (contentDataCurrent.length > 0)) {
-      // CONTENT CONTAINER
-      let contentContainer = document.createElement("div");
-      contentContainer.classList.add("content-container");
-      attendanceContainer.appendChild(contentContainer);
-
+      // PREVIOUS ATTENDANCE CONTENT
       if (contentDataPrevious.length > 0) {
         // CONTENT CONTAINER - PREVIOUS CONTENT HEADING
         let previousContentHeading = document.createElement("div");
         previousContentHeading.classList.add("lesson-content-heading");
+        previousContentHeading.dataset.date = previousDate[i];
+        previousContentHeading.addEventListener(
+          "click",
+          jumpToPreviousDateFromContentLink
+        );
         let newDate = new Date(previousDate[i]);
         let dateText = dayOfWeekConvertShort[newDate.getDay()];
-        let dateFormatted = `${previousDate[i].slice(0, 4)}年${previousDate[
-          i
-        ].slice(5, 7)}月${previousDate[i].slice(8, 10)}日（${dateText}）`;
-        previousContentHeading.innerHTML = dateFormatted;
+        if (previousDate[i]) {
+          let dateFormatted = `${previousDate[i].slice(0, 4)}年${previousDate[
+            i
+          ].slice(5, 7)}月${previousDate[i].slice(8, 10)}日（${dateText}）`;
+          previousContentHeading.innerHTML = dateFormatted;
+        }
         contentContainer.appendChild(previousContentHeading);
 
         // CONTENT CONTAINER - UNORDERED LIST PREVIOUS
@@ -2848,9 +2935,21 @@ function dataBuildRecordsCompact(
           toFromContainer.classList.add("to-from-container");
           contentItem.appendChild(toFromContainer);
 
+          // checks to see if there is only one digit and appends class
+          if (contentDataPrevious[p].start && !contentDataPrevious[p].end) {
+            toFromContainer.classList.add("single-digit");
+          } else if (
+            !contentDataPrevious[p].start &&
+            contentDataPrevious[p].end
+          ) {
+            toFromContainer.classList.add("single-digit");
+          }
+
           let start = document.createElement("div");
+          start.classList.add("start-page");
           let middle = document.createElement("div");
           let end = document.createElement("div");
+          end.classList.add("end-page");
           start.innerHTML = contentDataPrevious[p].start;
           middle.innerHTML = "~";
           end.innerHTML = contentDataPrevious[p].end;
@@ -2863,7 +2962,7 @@ function dataBuildRecordsCompact(
           contentListPrevious.appendChild(contentItem);
         }
       }
-
+      // CURRENT ATTENDANCE CONTENT
       if (contentDataCurrent.length > 0) {
         // CONTENT CONTAINER - CURRENT CONTENT HEADING
         let currentContentHeading = document.createElement("div");
@@ -2900,8 +2999,10 @@ function dataBuildRecordsCompact(
           contentItem.appendChild(toFromContainer);
 
           let start = document.createElement("div");
+          start.classList.add("start-page");
           let middle = document.createElement("div");
           let end = document.createElement("div");
+          end.classList.add("end-page");
           start.innerHTML = contentDataCurrent[p].start;
           middle.innerHTML = "~";
           end.innerHTML = contentDataCurrent[p].end;
@@ -2914,6 +3015,25 @@ function dataBuildRecordsCompact(
           contentListCurrent.appendChild(contentItem);
         }
       }
+    }
+
+    if (recordsAll[i].fields.note) {
+      // CONTENT COTAINER - NOTE CONTAINER
+      let noteContainer = document.createElement("div");
+      noteContainer.classList.add("note-container");
+      contentContainer.appendChild(noteContainer);
+
+      // CONTENT COTAINER - NOTE CONTAINER - HEADER
+      let noteHeader = document.createElement("div");
+      noteHeader.classList.add("note-header");
+      noteHeader.innerHTML = "Notes";
+      noteContainer.appendChild(noteHeader);
+
+      // CONTENT CONTAINER - NOTE CONTAINER - NOTE CONTENTS
+      let noteContents = document.createElement("div");
+      noteContents.classList.add("note-contents");
+      noteContents.innerHTML = recordsAll[i].fields.note;
+      noteContainer.appendChild(noteContents);
     }
   }
 
