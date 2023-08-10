@@ -860,6 +860,7 @@ a.student-name-katakana {
 
 .current-content-heading {
     margin-top: .5rem;
+    cursor: auto;
 }
 
 .content-list {
@@ -1329,5 +1330,9 @@ a.student-name-katakana {
     /* lesson content */
     .to-from-container {
         grid-template-columns: 2rem 1rem 2rem;
+    }
+
+    .to-from-container.single-digit {
+        width: 5rem;
     }
 }

@@ -2892,7 +2892,6 @@ function dataBuildRecordsCompact(
     );
     attendanceContainer.appendChild(contentContainer);
 
-    // CONTAINER - ATTENDANCE RECORD CONTAINER - CONTENT CONTAINER
     let contentDataCurrent = currentContent[i];
     let contentDataPrevious = previousContent[i];
     if ((contentDataPrevious.length > 0) | (contentDataCurrent.length > 0)) {
@@ -2997,6 +2996,16 @@ function dataBuildRecordsCompact(
           let toFromContainer = document.createElement("div");
           toFromContainer.classList.add("to-from-container");
           contentItem.appendChild(toFromContainer);
+
+          // checks to see if there is only one digit and appends class
+          if (contentDataCurrent[p].start && !contentDataCurrent[p].end) {
+            toFromContainer.classList.add("single-digit");
+          } else if (
+            !contentDataCurrent[p].start &&
+            contentDataCurrent[p].end
+          ) {
+            toFromContainer.classList.add("single-digit");
+          }
 
           let start = document.createElement("div");
           start.classList.add("start-page");

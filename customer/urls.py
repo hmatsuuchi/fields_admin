@@ -28,4 +28,8 @@ urlpatterns = [
     path('customer_profiles_api', views.customerProfilesAPI, name='customerProfilesAPI'), # customer profile API
     path('customer_details_api', views.customerDetailsAPI, name='customerDetailsAPI'), # customer details API
     # path('customer_access_log', views.customerAccessLog, name='customerAccessLog'), # customer access log
+
+    # INCREMENT STUDENT YEAR
+    # use this only once a year to increment student grades
+    # path('increment_student_year', views.incrementStudentYear, name='incrementStudentYear'),
 ]

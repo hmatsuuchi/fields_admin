@@ -212,9 +212,6 @@ def calculate_lessons_per_student():
             new_record.save()
 
 def calculate_students_in_out():
-    # print("")
-    # print("===================================")
-
     # current year and month
     today = datetime.now()
     curr_year = today.year
@@ -250,6 +247,7 @@ def calculate_students_in_out():
             in_out_record = StudentsInOut()
             in_out_record.year = year
             in_out_record.month = month
+            in_out_record.save()
         else:
             in_out_record = record_search[0]
 
@@ -261,10 +259,8 @@ def calculate_students_in_out():
         for y in dates:
             if year == y[0].date.year and month == y[0].date.month:
                 in_out_record.students_in.add(y[0].student)
-                # print(f"START: {y[0].student}")
             if year == y[1].date.year and month == y[1].date.month and four_weeks_ago.date() > y[1].date:
                 in_out_record.students_out.add(y[0].student)
-                # print(f"END: {y[1].student}")
 
         in_out_record.save()
 
@@ -276,5 +272,3 @@ def calculate_students_in_out():
             month = 1
         else:
             month += 1
-
-    # print("")

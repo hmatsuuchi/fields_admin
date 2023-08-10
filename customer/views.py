@@ -1,6 +1,3 @@
-# from cgitb import text
-# from typing import Text
-# from django.contrib.admin.decorators import display
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.http import JsonResponse
@@ -1254,3 +1251,25 @@ def accessLog(request):
     # print('POST PARAMETERS:', log.accesslog_post_parameters)
     # print('GET PARAMETERS:', log.accesslog_get_parameters)
     # print('===============================================')
+
+# ======================== INCREMENT STUDENT YEAR ========================
+@login_required(login_url='/user_profile/login/')
+@user_passes_test(lambda u: u.groups.filter(name__in=['Instructors', 'Superusers']).exists())
+def incrementStudentYear(request):
+    customers = CustomerProfile.objects.all()
+    print(f"CUSTOMER COUNT: {customers.count()}")
+
+    for x in customers:
+        print('-------')
+        print(x.last_name_romaji, x.first_name_romaji)
+        print(x.grade)
+        if x.grade != 0 and x.grade != 20:
+            x.grade += 1
+            # x.save()
+        print(x.grade)
+
+    data = {
+        'customerCount': customers.count(),
+    }
+
+    return JsonResponse(data)
