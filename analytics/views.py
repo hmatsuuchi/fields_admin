@@ -609,7 +609,7 @@ def AnalyticsAPI(request):
 
     # MODULE 009 - Student Grade Distribution
     if parameter == 'module_009':
-        records = StudentDemographics.objects.all().order_by('year','month')[:24]
+        records = StudentDemographics.objects.all().order_by('-year','-month')[:25][::-1]
 
         labels = []
         totals = []
@@ -631,6 +631,8 @@ def AnalyticsAPI(request):
             mid.append(x.mid_total)
             hig.append(x.hig_total)
             adu.append(x.adu_total)
+
+            print(f"{year}-{month}")
 
         datasets = [
             {

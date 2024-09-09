@@ -1262,6 +1262,8 @@ def incrementStudentYear(request):
     for x in customers:
         print('-------')
         print(x.last_name_romaji, x.first_name_romaji)
+        print(x.last_name_kanji, x.first_name_kanji)
+        print(x.last_name_katakana, x.first_name_katakana)
         print(x.grade)
         if x.grade != 0 and x.grade != 20:
             x.grade += 1
